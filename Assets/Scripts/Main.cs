@@ -5,7 +5,8 @@ using UnityEngine;
 using static Grid; 
 
 public class Main : MonoBehaviour
-{
+{   
+    public GameObject gridHolder;
     public Grid actualGrid;
     public float difficultyFactor = 0.5f;
     public int gridHorizontal = 30;
@@ -18,15 +19,11 @@ public class Main : MonoBehaviour
 
     public GameObject textKilled;
 
-    private int demonsKilled = 0;
-
-    // Start is called before the first frame update
     void Awake()
     {
-        actualGrid = new Grid(gridHorizontal, gridVertical,gridMinX, gridMinY, gridHorizontalStep, gridVerticalStep, tilePrefab);
+        actualGrid = new Grid(gridHorizontal, gridVertical,gridMinX, gridMinY, gridHorizontalStep, gridVerticalStep, tilePrefab, gridHolder);
     }
 
-    // Update is called once per frame
     void Update()
     {
 

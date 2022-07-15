@@ -10,7 +10,7 @@ public class Grid
     private List<List<GridTile>> grid;
 
     public Grid(int horizontal_size, int vertical_size, float min_x, float min_y, float horizontalStep,
-                float verticalStep, GameObject tilePrefab)
+                float verticalStep, GameObject tilePrefab, GameObject gridHolder)
     {
         grid = new List<List<GridTile>>();
 
@@ -25,7 +25,7 @@ public class Grid
                 Vector3 tile_position = new Vector3(current_x, current_y, 0.0f);
                 
                 DiscreteCoordinate positionInGrid = new DiscreteCoordinate(j, i);
-                GridTile tile = new GridTile(tilePrefab, tile_position, positionInGrid);
+                GridTile tile = new GridTile(tilePrefab, tile_position, positionInGrid, gridHolder);
                 row_grid.Add(tile);
             }
 
@@ -45,7 +45,7 @@ public class Grid
         return true;
     }
 
-    public bool verifyPosition(DiscreteCoordinate position, bool isPlayer){
+    public bool verifyPosition(DiscreteCoordinate position){
         int y = position.y;
         int x = position.x;
         if (!verifyIsInRange(position)){

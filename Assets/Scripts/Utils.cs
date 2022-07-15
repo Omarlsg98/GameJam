@@ -6,6 +6,10 @@ public class CoolDown
     public float timeToWait;
     private float actualTimeLeft = 0;
 
+    public CoolDown(float timeToWait){
+        this.timeToWait = timeToWait;
+    }
+
     public void updateCoolDown(){
         if (!isReady()){
             actualTimeLeft -= Time.deltaTime;

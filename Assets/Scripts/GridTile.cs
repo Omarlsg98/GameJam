@@ -10,8 +10,9 @@ public class GridTile
     public bool isEmpty;
     public DiscreteCoordinate postionInGrid;
 
-    public GridTile(GameObject prefab, Vector3 position, DiscreteCoordinate postionInGrid){
+    public GridTile(GameObject prefab, Vector3 position, DiscreteCoordinate postionInGrid, GameObject gridHolder){
         this.tile = ScriptableObject.Instantiate(prefab, position, Quaternion.identity);
+        this.tile.transform.parent = gridHolder.transform;
         this.postionInGrid = postionInGrid;
         this.isEmpty = true;
     }
