@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7719638489160080491}
   - component: {fileID: 6255839434735815685}
-  - component: {fileID: 5285713554019852220}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -85,26 +84,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5285713554019852220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8737955449678923080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050eaad365321d94397b3d92b3f23078, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 5
-  attackSpeed: 1
-  range: 0
-  life: 100
-  loadCapacity: 10
-  weight: 1
-  energyConsumption: 1
-  luck: 0.4
-  movementSpeed: 2
-  skills: 
-  type: 1

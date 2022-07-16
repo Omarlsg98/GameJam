@@ -96,7 +96,7 @@ public class Demon : MonoBehaviour
                 }
                 GameObject part = Instantiate(prefab, gameObject.transform);
                 part.transform.position = gameObject.transform.GetChild(spawnIndex).position;
-                part.GetComponent<SpriteRenderer>().sortingOrder = spawnIndex;
+                part.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = spawnIndex;
                 spawnIndex += 1;
                 spawCoolDown.turnOnCooldown();
             }
