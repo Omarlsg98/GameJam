@@ -110,7 +110,7 @@ public class Player : MonoBehaviour
             Destroy(headInTable);
         }
         this.head = head;
-        this.headInTable = Instantiate(surgeryHead, gameObject.transform.position, gameObject.transform.rotation);
+        this.headInTable = Instantiate(surgeryHead, partsParent.transform);
         putPartInTable(this.headInTable, 3);
     }
 
@@ -125,7 +125,7 @@ public class Player : MonoBehaviour
         part.transform.rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f));
         part.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         SpriteRenderer renderer = part.transform.GetChild(0).GetComponent<SpriteRenderer>();
-        renderer.sortingOrder = 2;
+        renderer.sortingOrder = 103;
         renderer.flipX = false;
         SpriteEffects.changeSpriteAlpha(renderer, 1.0f);
     }
