@@ -67,8 +67,8 @@ public class Grid
         return grid[position.y][position.x];
     }
 
-    public int getHorizontalSize(int y){
-        return grid[y].Count;
+    public int getHorizontalSize(){
+        return grid[0].Count;
     }
 
     public int getVerticalSize(){

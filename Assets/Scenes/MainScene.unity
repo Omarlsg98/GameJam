@@ -1340,6 +1340,7 @@ GameObject:
   - component: {fileID: 1356460314}
   - component: {fileID: 1356460315}
   - component: {fileID: 1356460316}
+  - component: {fileID: 1356460317}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -1399,6 +1400,20 @@ MonoBehaviour:
   demonPrefab: {fileID: 86331095839678440, guid: 79f4e22b0b3fb594dbeda08acdefd7b2, type: 3}
   demonTablePlaceHolder: {fileID: 1548948641576539837}
   partSpawnPoint: {fileID: 155711548}
+--- !u!114 &1356460317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356460313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a02571b76b49954b9e253d6e5446d75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemiesPrefabs:
+  - {fileID: 8767433061664985549, guid: 2778a6384a2fd11459862aa43edd1d32, type: 3}
 --- !u!1 &1422530797
 GameObject:
   m_ObjectHideFlags: 0

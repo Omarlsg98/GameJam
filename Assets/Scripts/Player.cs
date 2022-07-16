@@ -28,7 +28,6 @@ public class Player : MonoBehaviour
         main = GetComponent<Main>();
         grid = main.actualGrid;
         demons = new List<Demon>();
-        spawnDemon();
     }
 
     void Update(){
@@ -39,8 +38,8 @@ public class Player : MonoBehaviour
         PartData partData = part.GetComponent<PartConfiguration>().partData;
         int index = -1;
         int indexChild = -1;
+        bool enter = false;
         if (partData.type == PartType.Limb){
-            bool enter = false;
             for (int i = 0; i < parts.Length; i++){
                 if (parts[i] == null && i != 2){
                     enter = true;
@@ -49,13 +48,16 @@ public class Player : MonoBehaviour
                     break;
                 }
             }
-            if (!enter){
-                putPartInBox(part);
-                //TODO(FELIVANS): PONDRA ALGO (PARTE LLENA)
-            }
-        }else if (partData.type == PartType.Chest){
+        }else if (partData.type == PartType.Chest && parts[2] == null){
            index = 2;
            indexChild = 2;
+           enter = true;
+        }
+
+        if (!enter){
+            putPartInBox(part);
+            //TODO(FELIVANS): PONDRA ALGO (PARTE LLENA)
+            return;
         }
 
         parts[index] = part;

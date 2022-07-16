@@ -16,8 +16,9 @@ public class Demon : MonoBehaviour
     public DemonSoundController soundController;
 
     private GameObject[] parts;
-    private Head head;
-    private PartData totalStats;
+    public Head head;
+    public PartData totalStats;
+    public bool hasLegs = true;
 
     private float maxLife;
     private float actualLife;
@@ -34,35 +35,42 @@ public class Demon : MonoBehaviour
     private Grid grid;
     private float difficultyFactor;
     private bool isPlayer;
-    private bool hasLegs;
 
     private static string[] partNames = new string[]{"BackArm", "BackLeg", "Chest", "Head", "FrontLeg", "FrontArm"};
 
-    public static Demon instantiateDemon(GameObject prefab, Grid grid, GameObject[] parts, Head head, DiscreteCoordinate position, float difficultyFactor, bool isPlayer){
+    public static Demon instantiateDemon(GameObject prefab, Grid grid, GameObject[] parts, Head head, 
+                                        DiscreteCoordinate position, float difficultyFactor, bool isPlayer){
         GameObject demonGameObject = Instantiate(prefab, grid.getTilePosition(position), Quaternion.identity);
         Demon demon = demonGameObject.GetComponent<Demon>();
         demon.setupDemon(grid, parts, head, position, difficultyFactor, isPlayer);
         return demon;
     }
 
-    public void setupDemon(Grid grid, GameObject[] parts, Head head, DiscreteCoordinate actPosition, float difficultyFactor, bool isPlayer){
+    public void setupDemon(Grid grid, GameObject[] parts, Head head, DiscreteCoordinate actPosition, 
+                            float difficultyFactor, bool isPlayer){
         this.grid = grid;
         grid.getTile(actPosition).isEmpty = false;
 
-        this.parts = (GameObject[]) parts.Clone();
-        this.hasLegs = parts[1] == null || parts[3] != null;
-        this.head = new Head(head);
-        this.totalStats = PartData.getTotalStats(parts);
+        this.spawCoolDown = new CoolDown(0.2f);
+        this.spawnIndex = 0;
+        
+        this.isPlayer = isPlayer;
+
+        if (this.isPlayer){
+            this.parts = (GameObject[]) parts.Clone();
+            this.hasLegs = parts[1] == null || parts[3] != null;
+            this.head = new Head(head);
+            this.totalStats = PartData.getTotalStats(parts);
+        }else {
+            this.spawnIndex = 7;
+        }
+
         this.maxLife = this.totalStats.life;
         this.actualLife = this.maxLife;
         this.movementCoolDown = new CoolDown(1/this.totalStats.movementSpeed);
 
         this.actPosition = actPosition;
         this.difficultyFactor = difficultyFactor;
-        this.isPlayer = isPlayer;
-
-        this.spawCoolDown = new CoolDown(0.2f);
-        this.spawnIndex = 0;
     }
 
 
@@ -81,7 +89,7 @@ public class Demon : MonoBehaviour
 
     void Update(){
        spawnDemon();
-       move(1);
+       move(this.isPlayer? 1 : -1);
     }
 
     public void spawnDemon(){
