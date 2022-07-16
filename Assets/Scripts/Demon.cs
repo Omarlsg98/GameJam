@@ -9,14 +9,14 @@ using static PartConfiguration;
 
 using static CoolDown;
 using static DemonSoundController;
-
+using static Head;
 
 public class Demon : MonoBehaviour
 {
     public DemonSoundController soundController;
 
     private GameObject[] parts;
-    private GameObject head;
+    private Head head;
     private PartData totalStats;
 
     private float maxLife;
@@ -34,20 +34,24 @@ public class Demon : MonoBehaviour
     private Grid grid;
     private float difficultyFactor;
     private bool isPlayer;
+    private bool hasLegs;
 
-    public static Demon instantiateDemon(GameObject prefab, Grid grid, GameObject[] parts, GameObject head, DiscreteCoordinate position, float difficultyFactor, bool isPlayer){
+    private static string[] partNames = new string[]{"BackArm", "BackLeg", "Chest", "Head", "FrontLeg", "FrontArm"};
+
+    public static Demon instantiateDemon(GameObject prefab, Grid grid, GameObject[] parts, Head head, DiscreteCoordinate position, float difficultyFactor, bool isPlayer){
         GameObject demonGameObject = Instantiate(prefab, grid.getTilePosition(position), Quaternion.identity);
         Demon demon = demonGameObject.GetComponent<Demon>();
         demon.setupDemon(grid, parts, head, position, difficultyFactor, isPlayer);
         return demon;
     }
 
-    public void setupDemon(Grid grid, GameObject[] parts, GameObject head, DiscreteCoordinate actPosition, float difficultyFactor, bool isPlayer){
+    public void setupDemon(Grid grid, GameObject[] parts, Head head, DiscreteCoordinate actPosition, float difficultyFactor, bool isPlayer){
         this.grid = grid;
         grid.getTile(actPosition).isEmpty = false;
 
         this.parts = (GameObject[]) parts.Clone();
-        this.head = head;
+        this.hasLegs = parts[1] == null || parts[3] != null;
+        this.head = new Head(head);
         this.totalStats = PartData.getTotalStats(parts);
         this.maxLife = this.totalStats.life;
         this.actualLife = this.maxLife;
@@ -75,7 +79,6 @@ public class Demon : MonoBehaviour
         }
     }
 
-
     void Update(){
        spawnDemon();
        move(1);
@@ -85,20 +88,26 @@ public class Demon : MonoBehaviour
         if(spawnIndex < 6){
             spawCoolDown.updateCoolDown();
             if (spawCoolDown.isReady()){
-                GameObject prefab;
+                GameObject part = null;
                 if (spawnIndex < 3){
-                    prefab = parts[spawnIndex];
+                    part = parts[spawnIndex];
                 }
                 else if (spawnIndex == 3){
-                    prefab = this.head;
+                    part = Instantiate(this.head.prefab, gameObject.transform);
                 }else{
-                    prefab = parts[spawnIndex - 1];
+                    part = parts[spawnIndex - 1];
                 }
-                GameObject part = Instantiate(prefab, gameObject.transform);
-                part.transform.position = gameObject.transform.GetChild(spawnIndex).position;
-                part.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = spawnIndex;
+                if (part != null) {
+                    part.transform.SetParent(gameObject.transform); 
+                    part.transform.position = getChildPosition(Demon.partNames[spawnIndex]);
+                    if (this.hasLegs){
+                        part.transform.position -= new Vector3(0.0f, 0.8f, 0.0f);
+                    }
+                    part.transform.rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 0.0f));
+                    part.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = spawnIndex;
+                    spawCoolDown.turnOnCooldown();
+                }
                 spawnIndex += 1;
-                spawCoolDown.turnOnCooldown();
             }
         } else if (spawnIndex == 6){
             for (int i = 0; i < 6; i++){
@@ -167,5 +176,15 @@ public class Demon : MonoBehaviour
 
     private void animateDamage(){
         //animator.SetTrigger("Hurt");
+    }
+
+    private Vector3 getChildPosition(string name){
+        for (int i = 0; i <= 6; i++){
+            Transform child = gameObject.transform.GetChild(i);
+            if(child.name == name){
+                return child.position;
+            }
+        }
+        return new Vector3(0.0f, 0.0f, 0.0f);
     }
 }

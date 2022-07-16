@@ -6,23 +6,28 @@ using static Grid;
 using static Main;
 using static DiscreteCoordinate;
 using static Demon;
+using static Head;
 
 public class Player : MonoBehaviour
 {
-    public GameObject demon;
-    public GameObject[] parts = new GameObject[5];
-    public GameObject head;
+    public GameObject demonPrefab;
+    private GameObject[] parts = new GameObject[5];
+    private Head head;
 
     public GameObject demonTablePlaceHolder;
     public GameObject partSpawnPoint;
     
+    private GameObject headInTable;
+
     private Grid grid;
     private Main main;
+
+    private List<Demon> demons;
 
     void Start(){
         main = GetComponent<Main>();
         grid = main.actualGrid;
-
+        demons = new List<Demon>();
         spawnDemon();
     }
 
@@ -67,6 +72,15 @@ public class Player : MonoBehaviour
         putPartInBox(part);
     }
 
+    public void changeHead(Head head, GameObject surgeryHead){
+        if (headInTable != null){
+            Destroy(headInTable);
+        }
+        this.head = head;
+        this.headInTable = Instantiate(surgeryHead, gameObject.transform.position, gameObject.transform.rotation);
+        putPartInTable(this.headInTable, 3);
+    }
+
     private void putPartInBox(GameObject part){
         part.transform.position = partSpawnPoint.transform.position;
         part.transform.rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f));
@@ -81,10 +95,18 @@ public class Player : MonoBehaviour
         part.transform.rotation = placeHolderPart.transform.rotation;
     }
 
-    private void spawnDemon(){
-        Demon.instantiateDemon(demon, grid, parts, head, new DiscreteCoordinate(0,0), main.difficultyFactor, true);
-        for (int i = 0; i < parts.Length; i++){
-            parts[i] = null;
+    public void spawnDemon(){
+        if (head != null && parts[2] != null){
+            Demon newDemon = Demon.instantiateDemon(demonPrefab, grid, parts, head, 
+                                                    new DiscreteCoordinate(0,0), main.difficultyFactor, true);
+            demons.Add(newDemon);
+            head = null;
+            Destroy(headInTable);
+            for (int i = 0; i < parts.Length; i++){
+                parts[i] = null;
+            }
+        } else {
+            //TODO(felivans): spawn demon withou enough parts feedback.
         }
     }
 }

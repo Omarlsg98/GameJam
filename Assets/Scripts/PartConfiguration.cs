@@ -39,8 +39,8 @@ public class PartData
     public static PartData getTotalStats(GameObject[] parts){
         PartData result = null;
         for(int i = 0; i < parts.Length; i++){
-            PartData part = parts[i].GetComponent<PartConfiguration>().partData;
-            if (part != null){
+            if (parts[i] != null){
+                PartData part = parts[i].GetComponent<PartConfiguration>().partData;
                 if (result == null){
                     result =  new PartData(part);
                 }else{ 
