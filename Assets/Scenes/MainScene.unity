@@ -1395,10 +1395,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridHolder: {fileID: 2049517311}
   difficultyFactor: 0.5
-  gridHorizontal: 20
-  gridVertical: 5
+  gridHorizontal: 30
+  gridVertical: 4
   gridMinX: -5.5
-  gridMinY: -6
+  gridMinY: -5
   gridHorizontalStep: 3
   gridVerticalStep: 2
   tilePrefab: {fileID: 2937353528342257301, guid: 222486ea6cc929743b9b34d5cd9b1c26, type: 3}
@@ -1652,7 +1652,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622738301}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.43, y: -6.01, z: 0}
+  m_LocalPosition: {x: -5.43, y: -4.97, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2595,7 +2595,7 @@ MonoBehaviour:
     skills: 
     type: 0
   inBox: 0
-  inTable: 0
+  onTable: 0
 --- !u!114 &845884522073298631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2621,7 +2621,7 @@ MonoBehaviour:
     skills: 
     type: 0
   inBox: 0
-  inTable: 0
+  onTable: 0
 --- !u!4 &896728013385572160
 Transform:
   m_ObjectHideFlags: 0
@@ -2941,7 +2941,7 @@ MonoBehaviour:
     skills: 
     type: 0
   inBox: 0
-  inTable: 0
+  onTable: 0
 --- !u!212 &4498669340838223077
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3019,7 +3019,7 @@ MonoBehaviour:
     skills: 
     type: 1
   inBox: 0
-  inTable: 0
+  onTable: 0
 --- !u!114 &4751462085568351713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3045,7 +3045,7 @@ MonoBehaviour:
     skills: 
     type: 0
   inBox: 0
-  inTable: 0
+  onTable: 0
 --- !u!4 &5046820569135464374
 Transform:
   m_ObjectHideFlags: 0
@@ -3243,7 +3243,7 @@ MonoBehaviour:
     skills: 
     type: 0
   inBox: 0
-  inTable: 0
+  onTable: 0
 --- !u!212 &7018145800604857560
 SpriteRenderer:
   m_ObjectHideFlags: 0
