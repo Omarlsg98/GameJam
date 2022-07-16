@@ -245,7 +245,7 @@ public class Demon : MonoBehaviour
                 part.transform.parent = this.lootBag.transform;
                 part.transform.position = this.lootBag.transform.position;
                 part.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                part.transform.rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f));
+                part.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 70.0f);
                 SpriteEffects.changeSpriteAlpha(part.transform.GetChild(0).GetComponent<SpriteRenderer>(), 1.0f);
                 this.currentLoad += part.GetComponent<PartConfiguration>().partData.weight;
             } else {

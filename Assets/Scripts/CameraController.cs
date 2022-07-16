@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class ParallaxObject {
+    public GameObject gameObject;
+    public float speedPercentage;
+}
 
  public class CameraController : MonoBehaviour
  {
@@ -12,6 +17,7 @@ using UnityEngine;
     public float leftLimit = -4;
     public float rightLimit = 45;
     
+    public List<ParallaxObject> parallaxObjs;
     private int theScreenWidth;
     private float actualSpeed;
     
@@ -24,15 +30,24 @@ using UnityEngine;
     
     void Update() 
     {
+        int direction = 0;
         if (Input.mousePosition.x > theScreenWidth - Boundary && transform.position.x < rightLimit)
         {
-            transform.position += new Vector3(actualSpeed * Time.deltaTime, 0, 0);
-            actualSpeed += speedChange;
+            direction = 1;
         }else if (Input.mousePosition.x < 0 + Boundary && transform.position.x > leftLimit)
         {
-            transform.position -= new Vector3(actualSpeed * Time.deltaTime, 0, 0);
+            direction = -1;
+        }
+
+        if (direction != 0){
+            Vector3 positionDelta = new Vector3(actualSpeed * Time.deltaTime * direction, 0, 0);
+            transform.position += positionDelta;
+            foreach (ParallaxObject obj in parallaxObjs){
+                obj.gameObject.transform.position += new Vector3(positionDelta.x * obj.speedPercentage, 0, 0);
+            }
             actualSpeed += speedChange;
-        }else{
+        }
+        else{
              actualSpeed = baseSpeed;
         }
     }    
