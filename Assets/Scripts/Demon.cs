@@ -138,10 +138,10 @@ public class Demon : MonoBehaviour
         if (head.type == HeadType.Warrior){
             move(this.isPlayer? 1 : -1);
             int modifier = isPlayer? totalStats.range : -totalStats.range;
+            DiscreteCoordinate attackPosition =  new DiscreteCoordinate(this.actPosition.y, this.actPosition.x + modifier);
             foreach (Demon adversary in adversaryDemons)
             {
-                if (adversary.actPosition.x == (this.actPosition.x + modifier) && 
-                    adversary.isAlive()){
+                if (adversary.isInPosition(attackPosition) && adversary.isAlive()){
                     attack(adversary);
                     break;
                 }
