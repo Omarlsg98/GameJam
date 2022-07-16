@@ -16,7 +16,11 @@ public class Player : MonoBehaviour
 
     public GameObject demonTablePlaceHolder;
     public GameObject partSpawnPoint;
-    
+    public GameObject rowSelectorTilePrefab;
+    public CoolDown rowSelectorCoolDown;
+
+    private int rowSelected;
+    private GameObject rowSelectorTile;
     private GameObject headInTable;
 
     private Grid grid;
@@ -29,10 +33,33 @@ public class Player : MonoBehaviour
         grid = main.actualGrid;
         demons = new List<Demon>();
         main.playerDemons = demons;
+        rowSelected = 0;
+        rowSelectorTile = Instantiate(rowSelectorTilePrefab, 
+                                    grid.getTilePosition(new DiscreteCoordinate(0,0)), 
+                                    Quaternion.identity);
     }
 
     void Update(){
+        moveRowSelected();
+    }
 
+    private void moveRowSelected(){
+        rowSelectorCoolDown.updateCoolDown();
+        if (rowSelectorCoolDown.isReady()){
+            float verticalAxis = Input.GetAxis("Vertical");
+            int newRowSelected = rowSelected;
+            if (verticalAxis > 0){
+                newRowSelected += 1;
+            }else if (verticalAxis < 0){
+                newRowSelected -= 1;
+            }
+            DiscreteCoordinate newPosition = new DiscreteCoordinate(newRowSelected, 0);
+            if (rowSelected != newRowSelected && grid.verifyIsInRange(newPosition)){
+                rowSelected = newRowSelected;
+                rowSelectorTile.transform.position = grid.getTilePosition(newPosition);
+                rowSelectorCoolDown.turnOnCooldown();
+            }
+        }
     }
 
     public void addBodyPart(GameObject part){
@@ -99,9 +126,16 @@ public class Player : MonoBehaviour
     }
 
     public void spawnDemon(){
-        if (head != null && parts[2] != null){
+        DiscreteCoordinate newPosition = new DiscreteCoordinate(rowSelected, 0);
+        if (head != null && parts[2] != null && !grid.getTile(newPosition).isPlayerOnTile){
+            foreach(Demon adversary in main.enemyDemons){
+                if (adversary.isInPosition(newPosition)){
+                    adversary.applyPushBack();
+                }
+            }
             Demon newDemon = Demon.instantiateDemon(demonPrefab, grid, parts, head, 
-                                                    new DiscreteCoordinate(0,0), main.difficultyFactor, 
+                                                    newPosition,
+                                                    main.difficultyFactor, 
                                                     true, main.enemyDemons);
             demons.Add(newDemon);
             head = null;

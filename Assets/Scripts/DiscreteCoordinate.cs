@@ -7,17 +7,9 @@ public class DiscreteCoordinate{
         this.y = y;
     }
 
-    public override bool Equals(System.Object obj)
+    public bool isEquals(DiscreteCoordinate obj)
     {
-        //Check for null and compare run-time types.
-        if ((obj == null) || ! this.GetType().Equals(obj.GetType()))
-        {
-            return false;
-        }
-        else {
-            DiscreteCoordinate p = (DiscreteCoordinate) obj;
-            return (x == p.x) && (y == p.y);
-        }
+        return obj.x == this.x && obj.y == this.y;
     }
 
     public override int GetHashCode()

@@ -12,6 +12,7 @@ using static Head;
 public class EnemyHub : MonoBehaviour
 {
     public List<GameObject> enemiesPrefabs;
+    public float demonSpawnProbability = 0.005f;
     
     private Grid grid;
     private Main main;
@@ -30,13 +31,23 @@ public class EnemyHub : MonoBehaviour
     }
 
     void Update(){
-
+        if(MyRandom.randomBool(demonSpawnProbability)){
+            spawnDemon();
+        }
     }
 
     public void spawnDemon(){
-        int lineNumber = Random.Range(0, 1);//grid.getVerticalSize());
+        int lineNumber = Random.Range(0, grid.getVerticalSize());
+        DiscreteCoordinate newPosition = new DiscreteCoordinate(lineNumber, monsterSpawnPoint);
+
+        foreach(Demon adversary in  main.playerDemons){
+            if (adversary.isInPosition(newPosition)){
+                adversary.applyPushBack();
+            }
+        }
+
         Demon newDemon = Demon.instantiateDemon(enemiesPrefabs[0], grid, null, null, 
-                                                new DiscreteCoordinate(lineNumber, monsterSpawnPoint), 
+                                                newPosition, 
                                                 main.difficultyFactor, false, main.playerDemons);
         enemies.Add(newDemon);
     }

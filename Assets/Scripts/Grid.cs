@@ -25,7 +25,7 @@ public class Grid
                 Vector3 tile_position = new Vector3(current_x, current_y, 0.0f);
                 
                 DiscreteCoordinate positionInGrid = new DiscreteCoordinate(j, i);
-                GridTile tile = new GridTile(tilePrefab, tile_position, positionInGrid, gridHolder);
+                GridTile tile = new GridTile(tilePrefab, tile_position, positionInGrid, gridHolder, false);
                 row_grid.Add(tile);
             }
 
@@ -52,7 +52,7 @@ public class Grid
             return false;
         }
         GridTile actTile = getTile(position);
-        return actTile.isEmpty;
+        return actTile.getIsEmpty();
     }
     
     public Vector3 getTilePosition(DiscreteCoordinate position){

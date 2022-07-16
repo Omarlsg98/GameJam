@@ -1403,6 +1403,8 @@ MonoBehaviour:
   gridVerticalStep: 2
   tilePrefab: {fileID: 2937353528342257301, guid: 222486ea6cc929743b9b34d5cd9b1c26, type: 3}
   textKilled: {fileID: 0}
+  playerDemons: []
+  enemyDemons: []
 --- !u!114 &1356460316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1418,6 +1420,9 @@ MonoBehaviour:
   demonPrefab: {fileID: 86331095839678440, guid: 79f4e22b0b3fb594dbeda08acdefd7b2, type: 3}
   demonTablePlaceHolder: {fileID: 1548948641576539837}
   partSpawnPoint: {fileID: 155711548}
+  rowSelectorTilePrefab: {fileID: 8188997210470797000, guid: 3284ab19e4e247f49899ea52066ac8fc, type: 3}
+  rowSelectorCoolDown:
+    timeToWait: 0.3
 --- !u!114 &1356460317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1432,6 +1437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesPrefabs:
   - {fileID: 8767433061664985549, guid: 2778a6384a2fd11459862aa43edd1d32, type: 3}
+  demonSpawnProbability: 0.00005
 --- !u!1 &1422530797
 GameObject:
   m_ObjectHideFlags: 0

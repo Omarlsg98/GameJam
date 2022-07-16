@@ -52,7 +52,7 @@ public class Demon : MonoBehaviour
     public void setupDemon(Grid grid, GameObject[] parts, Head head, DiscreteCoordinate actPosition, 
                             float difficultyFactor, bool isPlayer, List<Demon> adversaryDemons){
         this.grid = grid;
-        grid.getTile(actPosition).isEmpty = false;
+        grid.getTile(actPosition).updateStatus(false, isPlayer);
         this.adversaryDemons = adversaryDemons;
 
         this.spawCoolDown = new CoolDown(0.2f);
@@ -140,8 +140,8 @@ public class Demon : MonoBehaviour
         if (movementCoolDown.isReady()){     
             DiscreteCoordinate newPosition =  new DiscreteCoordinate(actPosition.y, actPosition.x + horizontalAxis);
             if (grid.verifyPosition(newPosition)){
-                grid.getTile(actPosition).isEmpty = true;
-                grid.getTile(newPosition).isEmpty = false;
+                grid.getTile(actPosition).updateStatus(true, isPlayer);
+                grid.getTile(newPosition).updateStatus(false, isPlayer);
                 this.actPosition = newPosition;
                 gameObject.transform.position = grid.getTilePosition(newPosition);
                 movementCoolDown.turnOnCooldown();
@@ -156,6 +156,12 @@ public class Demon : MonoBehaviour
         return -1;
     }
 
+    public void applyPushBack(){
+        movementCoolDown.turnOffCooldown();
+        attackCoolDown.turnOnCooldown();
+        move(this.isPlayer? -1 : 1);
+    }
+
     public void applyHit(float damage){
         this.actualLife -= isPlayer? (damage * difficultyFactor) : damage;
         //float lifePercentage = (float)this.actualLife/this.maxLife;
@@ -163,7 +169,7 @@ public class Demon : MonoBehaviour
         //soundController.reproduceDamage();
         //animateDamage();
         if (!isAlive()){
-            grid.getTile(actPosition).isEmpty = true;
+            grid.getTile(actPosition).updateStatus(true, isPlayer);
             Destroy(gameObject);
         }
     }
@@ -176,7 +182,8 @@ public class Demon : MonoBehaviour
         int modifier = isPlayer? totalStats.range : -totalStats.range;
         foreach (Demon adversary in adversaryDemons)
         {
-            if (adversary.actPosition.x == (this.actPosition.x + modifier)){
+            if (adversary.actPosition.x == (this.actPosition.x + modifier) && 
+                adversary.isAlive()){
                 attack(adversary);
                 break;
             }
@@ -206,5 +213,9 @@ public class Demon : MonoBehaviour
             }
         }
         return new Vector3(0.0f, 0.0f, 0.0f);
+    }
+
+    public bool isInPosition(DiscreteCoordinate position){
+        return this.actPosition.isEquals(position);
     }
 }

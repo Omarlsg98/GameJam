@@ -20,6 +20,10 @@ public class CoolDown
         actualTimeLeft = (float)timeToWait;
     }
 
+    public void turnOffCooldown(){
+        actualTimeLeft = 0;
+    }
+
     public bool isReady(){
         return actualTimeLeft <= 0;
     }
