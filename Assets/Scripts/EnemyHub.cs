@@ -25,6 +25,7 @@ public class EnemyHub : MonoBehaviour
         monsterSpawnPoint = grid.getHorizontalSize() - 1;
 
         enemies = new List<Demon>();
+        main.enemyDemons = enemies;
         spawnDemon();
     }
 
@@ -33,10 +34,10 @@ public class EnemyHub : MonoBehaviour
     }
 
     public void spawnDemon(){
-        int lineNumber = Random.Range(0, grid.getVerticalSize());
+        int lineNumber = Random.Range(0, 1);//grid.getVerticalSize());
         Demon newDemon = Demon.instantiateDemon(enemiesPrefabs[0], grid, null, null, 
                                                 new DiscreteCoordinate(lineNumber, monsterSpawnPoint), 
-                                                main.difficultyFactor, false);
+                                                main.difficultyFactor, false, main.playerDemons);
         enemies.Add(newDemon);
     }
 }

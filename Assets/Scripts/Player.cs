@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
         main = GetComponent<Main>();
         grid = main.actualGrid;
         demons = new List<Demon>();
+        main.playerDemons = demons;
     }
 
     void Update(){
@@ -100,7 +101,8 @@ public class Player : MonoBehaviour
     public void spawnDemon(){
         if (head != null && parts[2] != null){
             Demon newDemon = Demon.instantiateDemon(demonPrefab, grid, parts, head, 
-                                                    new DiscreteCoordinate(0,0), main.difficultyFactor, true);
+                                                    new DiscreteCoordinate(0,0), main.difficultyFactor, 
+                                                    true, main.enemyDemons);
             demons.Add(newDemon);
             head = null;
             Destroy(headInTable);

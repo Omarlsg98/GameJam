@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using static Grid; 
+using static Demon;
+
 
 public class Main : MonoBehaviour
 {   
@@ -18,6 +20,9 @@ public class Main : MonoBehaviour
     public GameObject tilePrefab;
 
     public GameObject textKilled;
+    public List<Demon> playerDemons;
+    public List<Demon> enemyDemons;
+
 
     void Awake()
     {

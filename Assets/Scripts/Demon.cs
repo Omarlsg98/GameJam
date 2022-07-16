@@ -25,6 +25,7 @@ public class Demon : MonoBehaviour
 
     private DiscreteCoordinate actPosition;
     private CoolDown movementCoolDown;
+    private CoolDown attackCoolDown;
 
     private CoolDown spawCoolDown;
     private int spawnIndex = 0;
@@ -35,21 +36,24 @@ public class Demon : MonoBehaviour
     private Grid grid;
     private float difficultyFactor;
     private bool isPlayer;
+    private List<Demon> adversaryDemons;
 
     private static string[] partNames = new string[]{"BackArm", "BackLeg", "Chest", "Head", "FrontLeg", "FrontArm"};
 
     public static Demon instantiateDemon(GameObject prefab, Grid grid, GameObject[] parts, Head head, 
-                                        DiscreteCoordinate position, float difficultyFactor, bool isPlayer){
+                                        DiscreteCoordinate position, float difficultyFactor, bool isPlayer,
+                                        List<Demon> adversaryDemons){
         GameObject demonGameObject = Instantiate(prefab, grid.getTilePosition(position), Quaternion.identity);
         Demon demon = demonGameObject.GetComponent<Demon>();
-        demon.setupDemon(grid, parts, head, position, difficultyFactor, isPlayer);
+        demon.setupDemon(grid, parts, head, position, difficultyFactor, isPlayer, adversaryDemons);
         return demon;
     }
 
     public void setupDemon(Grid grid, GameObject[] parts, Head head, DiscreteCoordinate actPosition, 
-                            float difficultyFactor, bool isPlayer){
+                            float difficultyFactor, bool isPlayer, List<Demon> adversaryDemons){
         this.grid = grid;
         grid.getTile(actPosition).isEmpty = false;
+        this.adversaryDemons = adversaryDemons;
 
         this.spawCoolDown = new CoolDown(0.2f);
         this.spawnIndex = 0;
@@ -68,6 +72,7 @@ public class Demon : MonoBehaviour
         this.maxLife = this.totalStats.life;
         this.actualLife = this.maxLife;
         this.movementCoolDown = new CoolDown(1/this.totalStats.movementSpeed);
+        this.attackCoolDown = new CoolDown(1/this.totalStats.attackSpeed);
 
         this.actPosition = actPosition;
         this.difficultyFactor = difficultyFactor;
@@ -88,8 +93,12 @@ public class Demon : MonoBehaviour
     }
 
     void Update(){
-       spawnDemon();
-       move(this.isPlayer? 1 : -1);
+        spawnDemon();
+        attackCoolDown.updateCoolDown();
+        if (isAlive()){
+            move(this.isPlayer? 1 : -1);
+            tryToAttack();
+        }
     }
 
     public void spawnDemon(){
@@ -128,7 +137,7 @@ public class Demon : MonoBehaviour
 
     public int move(int horizontalAxis)
     {
-        if (movementCoolDown.isReady() && isAlive()){     
+        if (movementCoolDown.isReady()){     
             DiscreteCoordinate newPosition =  new DiscreteCoordinate(actPosition.y, actPosition.x + horizontalAxis);
             if (grid.verifyPosition(newPosition)){
                 grid.getTile(actPosition).isEmpty = true;
@@ -147,8 +156,8 @@ public class Demon : MonoBehaviour
         return -1;
     }
 
-    public void applyHit(int damage){
-        this.actualLife -= isPlayer? (int) (damage * difficultyFactor) : damage;
+    public void applyHit(float damage){
+        this.actualLife -= isPlayer? (damage * difficultyFactor) : damage;
         //float lifePercentage = (float)this.actualLife/this.maxLife;
         //spriteRenderer.material.color = new Color(1.0f, lifePercentage, lifePercentage);
         //soundController.reproduceDamage();
@@ -163,20 +172,23 @@ public class Demon : MonoBehaviour
         return this.actualLife > 0 && this.spawnIndex == 7;
     }
     
-    public void attack(){
-        /*
-        AttackConfig atcConfig = getAttackConfig(selector);
-        if (atcConfig.attackCoolDown.isReady() && atcConfig.isUsable() && isAlive()){
-            soundController.reproduceAttack();
-            animateAttack();
-            atcConfig.addUsage();
-            Attack attack = Attack.getAttackInstance(isPlayer, actPosition, grid, atcConfig);
-            attacksInProgress.Add(attack);
-            atcConfig.attackCoolDown.turnOnCooldown();
+    public void tryToAttack(){
+        int modifier = isPlayer? totalStats.range : -totalStats.range;
+        foreach (Demon adversary in adversaryDemons)
+        {
+            if (adversary.actPosition.x == (this.actPosition.x + modifier)){
+                attack(adversary);
+                break;
+            }
         }
-        */
     }
-
+    
+    public void attack(Demon adversary){
+        if(attackCoolDown.isReady()){
+            adversary.applyHit(this.totalStats.damage);
+            attackCoolDown.turnOnCooldown();
+        }
+    }
 
     private void animateAttack(){
         //animator.SetTrigger("Attack01");
