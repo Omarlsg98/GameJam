@@ -46,7 +46,7 @@ public class Demon : MonoBehaviour
         this.grid = grid;
         grid.getTile(actPosition).isEmpty = false;
 
-        this.parts = parts;
+        this.parts = (GameObject[]) parts.Clone();
         this.head = head;
         this.totalStats = PartData.getTotalStats(parts);
         this.maxLife = this.totalStats.life;

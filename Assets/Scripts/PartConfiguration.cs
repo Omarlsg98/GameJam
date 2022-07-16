@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using static Main;
+using static Player;
+
 [System.Serializable]
 public class PartData
 {
@@ -72,10 +75,32 @@ public class PartData
 public class PartConfiguration : MonoBehaviour
 {
     public PartData partData;
+    public bool inBox = false;
+    public bool inTable = false;
+
+    private Player player;
+
+    void Start(){
+        player = GameObject.FindWithTag("GameController").GetComponent<Player>();
+    }
 
     void OnMouseEnter()
     {
         Debug.Log("Mouse is over " + gameObject.transform.name);
+    }
+
+    void OnMouseOver(){
+        if(Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)){
+            if (inBox) {
+                player.addBodyPart(gameObject);
+                this.inTable = true;
+                this.inBox = false; 
+            } else if (inTable) {
+                player.removeBodyPart(gameObject);
+                this.inTable = false;
+                this.inBox = true;
+            }
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
