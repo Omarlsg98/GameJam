@@ -1,3 +1,4 @@
+using System;
 public class DiscreteCoordinate{
     public int x;
     public int y;
@@ -10,6 +11,14 @@ public class DiscreteCoordinate{
     public bool isEquals(DiscreteCoordinate obj)
     {
         return obj.x == this.x && obj.y == this.y;
+    }
+
+    public int getDistanceTo(DiscreteCoordinate other){
+        if (other.y == this.y){
+            return Math.Abs(other.x - this.x);
+        }else {
+            return other.x + this.x + Math.Abs(other.y - this.y);
+        }
     }
 
     public override int GetHashCode()

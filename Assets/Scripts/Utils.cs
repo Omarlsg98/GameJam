@@ -44,3 +44,13 @@ public class MyRandom{
         return new DiscreteCoordinate(randomX, randomY);
     }
 }
+
+public class SpriteEffects{
+    public static void changeSpriteAlpha(SpriteRenderer renderer, float alpha){
+        if (renderer == null)
+            return;
+        Color tmp = renderer.material.color;
+        tmp.a = alpha;
+        renderer.material.color = tmp;
+    }
+}

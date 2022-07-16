@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
 
     public GameObject demonTablePlaceHolder;
     public GameObject partSpawnPoint;
+    public GameObject partsParent;
     public GameObject rowSelectorTilePrefab;
     public CoolDown rowSelectorCoolDown;
 
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour
         grid = main.actualGrid;
         demons = new List<Demon>();
         main.playerDemons = demons;
+        main.playerController = this;
         rowSelected = 0;
         rowSelectorTile = Instantiate(rowSelectorTilePrefab, 
                                     grid.getTilePosition(new DiscreteCoordinate(0,0)), 
@@ -111,11 +113,15 @@ public class Player : MonoBehaviour
         putPartInTable(this.headInTable, 3);
     }
 
-    private void putPartInBox(GameObject part){
+    public void putPartInBox(GameObject part){
+        part.transform.parent = partsParent.transform;
         part.transform.position = partSpawnPoint.transform.position;
         part.transform.rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f));
         part.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        part.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = 2;
+        SpriteRenderer renderer = part.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        renderer.sortingOrder = 2;
+        renderer.flipX = false;
+        SpriteEffects.changeSpriteAlpha(renderer, 1);
     }
 
     private void putPartInTable(GameObject part, int indexChild){
@@ -135,8 +141,7 @@ public class Player : MonoBehaviour
             }
             Demon newDemon = Demon.instantiateDemon(demonPrefab, grid, parts, head, 
                                                     newPosition,
-                                                    main.difficultyFactor, 
-                                                    true, main.enemyDemons);
+                                                    true, main);
             demons.Add(newDemon);
             head = null;
             Destroy(headInTable);

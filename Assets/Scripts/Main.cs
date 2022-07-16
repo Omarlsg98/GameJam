@@ -4,6 +4,7 @@ using UnityEngine;
 
 using static Grid; 
 using static Demon;
+using static Player;
 
 
 public class Main : MonoBehaviour
@@ -24,6 +25,7 @@ public class Main : MonoBehaviour
     public List<Demon> enemyDemons;
     public List<Demon> toScavenge;
 
+    public Player playerController;
 
     void Awake()
     {
