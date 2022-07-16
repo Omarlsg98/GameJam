@@ -22,6 +22,7 @@ public class Main : MonoBehaviour
     public GameObject textKilled;
     public List<Demon> playerDemons;
     public List<Demon> enemyDemons;
+    public List<Demon> toScavenge;
 
 
     void Awake()

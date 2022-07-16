@@ -77,7 +77,7 @@ public class PartConfiguration : MonoBehaviour
 {
     public PartData partData;
     public bool inBox = false;
-    public bool inTable = false;
+    public bool onTable = false;
 
     private Player player;
 
@@ -94,11 +94,11 @@ public class PartConfiguration : MonoBehaviour
         if(Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)){
             if (inBox) {
                 player.addBodyPart(gameObject);
-                this.inTable = true;
+                this.onTable = true;
                 this.inBox = false; 
-            } else if (inTable) {
+            } else if (onTable) {
                 player.removeBodyPart(gameObject);
-                this.inTable = false;
+                this.onTable = false;
                 this.inBox = true;
             }
         }
@@ -109,6 +109,11 @@ public class PartConfiguration : MonoBehaviour
         if (collision.transform.name == "DeleteLine"){
             Destroy(gameObject);
         }
+    }
+
+    public void setOnField(){
+        this.inBox = false;
+        this.onTable = false;
     }
 }
 

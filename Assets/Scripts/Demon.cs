@@ -27,6 +27,7 @@ public class Demon : MonoBehaviour
     private CoolDown movementCoolDown;
     private CoolDown attackCoolDown;
 
+    private CoolDown vanishCoolDown;
     private CoolDown spawCoolDown;
     private int spawnIndex = 0;
 
@@ -55,7 +56,9 @@ public class Demon : MonoBehaviour
         grid.getTile(actPosition).updateStatus(false, isPlayer);
         this.adversaryDemons = adversaryDemons;
 
-        this.spawCoolDown = new CoolDown(0.2f);
+        this.vanishCoolDown = new CoolDown(20.0f);
+        this.vanishCoolDown.turnOnCooldown();
+        this.spawCoolDown = new CoolDown(0.15f);
         this.spawnIndex = 0;
         
         this.isPlayer = isPlayer;
@@ -80,24 +83,17 @@ public class Demon : MonoBehaviour
 
 
     void Start(){
-        /*
-        GameObject capsuleChild = gameObject.transform.GetChild(0).gameObject;
-        animator = capsuleChild.GetComponent<Animator>();        
-        spriteRenderer = capsuleChild.GetComponent<SpriteRenderer>();
-        */
         audioSource = gameObject.GetComponent<AudioSource>();
         soundController.setAudioSource(audioSource);
-        if (isPlayer){
-            //spriteRenderer.flipX = true;
-        }
     }
 
     void Update(){
         spawnDemon();
         attackCoolDown.updateCoolDown();
         if (isAlive()){
-            move(this.isPlayer? 1 : -1);
-            tryToAttack();
+            think();
+        }else{
+            animateVanishProcess();
         }
     }
 
@@ -122,6 +118,9 @@ public class Demon : MonoBehaviour
                     }
                     part.transform.rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 0.0f));
                     part.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = spawnIndex;
+                    part.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                    if (spawnIndex != 3)
+                        part.transform.GetComponent<PartConfiguration>().setOnField();
                     spawCoolDown.turnOnCooldown();
                 }
                 spawnIndex += 1;
@@ -135,6 +134,31 @@ public class Demon : MonoBehaviour
         }
     }
 
+    public void think(){
+        if (head.type == HeadType.Warrior){
+            move(this.isPlayer? 1 : -1);
+            int modifier = isPlayer? totalStats.range : -totalStats.range;
+            foreach (Demon adversary in adversaryDemons)
+            {
+                if (adversary.actPosition.x == (this.actPosition.x + modifier) && 
+                    adversary.isAlive()){
+                    attack(adversary);
+                    break;
+                }
+            }
+        } else if (head.type == HeadType.Scavenger){
+            move(this.isPlayer? 1 : -1);
+        }
+    }
+    
+    public void attack(Demon adversary){
+        if(attackCoolDown.isReady()){
+            animateAttack();
+            adversary.applyHit(this.totalStats.damage);
+            attackCoolDown.turnOnCooldown();
+        }
+    }
+    
     public int move(int horizontalAxis)
     {
         if (movementCoolDown.isReady()){     
@@ -170,32 +194,33 @@ public class Demon : MonoBehaviour
         //animateDamage();
         if (!isAlive()){
             grid.getTile(actPosition).updateStatus(true, isPlayer);
-            Destroy(gameObject);
+            animateDead();
         }
     }
 
     public bool isAlive(){
         return this.actualLife > 0 && this.spawnIndex == 7;
     }
-    
-    public void tryToAttack(){
-        int modifier = isPlayer? totalStats.range : -totalStats.range;
-        foreach (Demon adversary in adversaryDemons)
-        {
-            if (adversary.actPosition.x == (this.actPosition.x + modifier) && 
-                adversary.isAlive()){
-                attack(adversary);
-                break;
-            }
+
+    private void animateDead(){
+        for (int i = 0; i < gameObject.transform.childCount; i++){
+            gameObject.transform.GetChild(i).gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         }
     }
-    
-    public void attack(Demon adversary){
-        if(attackCoolDown.isReady()){
-            animateAttack();
-            adversary.applyHit(this.totalStats.damage);
-            attackCoolDown.turnOnCooldown();
+
+    private void animateVanishProcess(){
+        vanishCoolDown.updateCoolDown();
+        if (vanishCoolDown.isReady()){
+            Destroy(gameObject);
         }
+        float vanishFactor = vanishCoolDown.getPercentageToWait();
+        vanishFactor = vanishFactor < 0.2f ? 0.2f : vanishFactor;
+        for (int i = 0; i < gameObject.transform.childCount; i++){
+            SpriteRenderer renderer = gameObject.transform.GetChild(i).GetChild(0).gameObject.GetComponent<SpriteRenderer>();
+            Color tmp = renderer.material.color;
+            tmp.a = vanishFactor;
+            renderer.material.color = tmp;
+        } 
     }
 
     private void animateAttack(){

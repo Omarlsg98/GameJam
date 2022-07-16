@@ -10,6 +10,10 @@ public class CoolDown
         this.timeToWait = timeToWait;
     }
 
+    public float getPercentageToWait(){
+        return this.actualTimeLeft/this.timeToWait;
+    }
+
     public void updateCoolDown(){
         if (!isReady()){
             actualTimeLeft -= Time.deltaTime;

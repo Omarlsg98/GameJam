@@ -1405,6 +1405,7 @@ MonoBehaviour:
   textKilled: {fileID: 0}
   playerDemons: []
   enemyDemons: []
+  toScavenge: []
 --- !u!114 &1356460316
 MonoBehaviour:
   m_ObjectHideFlags: 0
