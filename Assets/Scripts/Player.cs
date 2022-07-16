@@ -18,11 +18,10 @@ public class Player : MonoBehaviour
     public GameObject demonTablePlaceHolder;
     public GameObject partSpawnPoint;
     public GameObject partsParent;
-    public GameObject rowSelectorTilePrefab;
+    public GameObject rowSelectorTile;
     public CoolDown rowSelectorCoolDown;
 
     private int rowSelected;
-    private GameObject rowSelectorTile;
     private GameObject headInTable;
 
     private Grid grid;
@@ -36,17 +35,15 @@ public class Player : MonoBehaviour
         demons = new List<Demon>();
         main.playerDemons = demons;
         main.playerController = this;
-        rowSelected = 0;
-        rowSelectorTile = Instantiate(rowSelectorTilePrefab, 
-                                    grid.getTilePosition(new DiscreteCoordinate(0,0)), 
-                                    Quaternion.identity);
+        rowSelected = -1;
+        moveSelectedRow(0);
     }
 
     void Update(){
-        moveRowSelected();
+        moveSelectedRowInput();
     }
 
-    private void moveRowSelected(){
+    private void moveSelectedRowInput(){
         rowSelectorCoolDown.updateCoolDown();
         if (rowSelectorCoolDown.isReady()){
             float verticalAxis = Input.GetAxis("Vertical");
@@ -56,12 +53,18 @@ public class Player : MonoBehaviour
             }else if (verticalAxis < 0){
                 newRowSelected -= 1;
             }
-            DiscreteCoordinate newPosition = new DiscreteCoordinate(newRowSelected, 0);
-            if (rowSelected != newRowSelected && grid.verifyIsInRange(newPosition)){
-                rowSelected = newRowSelected;
-                rowSelectorTile.transform.position = grid.getTilePosition(newPosition);
-                rowSelectorCoolDown.turnOnCooldown();
-            }
+            moveSelectedRow(newRowSelected);
+        }
+    }
+
+    private void moveSelectedRow(int newRowSelected){
+        DiscreteCoordinate newPosition = new DiscreteCoordinate(newRowSelected, 0);
+        if (rowSelected != newRowSelected && grid.verifyIsInRange(newPosition)){
+            rowSelected = newRowSelected;
+            rowSelectorTile.transform.position = new Vector3(rowSelectorTile.transform.position.x, 
+                                                            grid.getTilePosition(newPosition).y,
+                                                            rowSelectorTile.transform.position.z);
+            rowSelectorCoolDown.turnOnCooldown();
         }
     }
 
@@ -120,6 +123,7 @@ public class Player : MonoBehaviour
             partConf.inBox = true;
             partConf.onTable = false;
         }
+        part.layer = LayerMask.NameToLayer("BoxLayer");
         part.transform.SetParent(partsParent.transform);
         part.transform.position = partSpawnPoint.transform.position;
         part.transform.rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f));

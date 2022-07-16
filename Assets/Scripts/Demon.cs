@@ -129,6 +129,7 @@ public class Demon : MonoBehaviour
                 }
                 if (part != null) {
                     part.transform.SetParent(gameObject.transform); 
+                    part.layer = LayerMask.NameToLayer("Default");
                     part.transform.position = getChildByName(Demon.partNames[spawnIndex]).transform.position;
                     if (this.hasLegs){
                         part.transform.position -= new Vector3(0.0f, 0.8f, 0.0f);
@@ -317,6 +318,7 @@ public class Demon : MonoBehaviour
             Rigidbody2D rigidBody = child.gameObject.GetComponent<Rigidbody2D>();
             if(rigidBody != null)
                 rigidBody.bodyType = RigidbodyType2D.Dynamic;
+            child.gameObject.layer = LayerMask.NameToLayer("Pinata");
         }
     }
 
