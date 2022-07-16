@@ -63,6 +63,7 @@ public class PartData
 
         result.attackSpeed /= PartData.partsNumber;
         result.range = (int)(result.range/PartData.partsNumber);
+        result.range = result.range == 0? 1 : result.range;
         result.loadCapacity /= PartData.partsNumber;
         result.weight /= PartData.partsNumber;
         result.luck /= PartData.partsNumber;

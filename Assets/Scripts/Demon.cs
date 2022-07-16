@@ -199,7 +199,7 @@ public class Demon : MonoBehaviour
     }
 
     private void animateAttack(){
-        for (int i = 0; i <= 6; i++){
+        for (int i = 0; i < gameObject.transform.childCount; i++){
             Animator animator = gameObject.transform.GetChild(i).gameObject.GetComponent<Animator>();
             animator.SetTrigger("Attacking");
         }

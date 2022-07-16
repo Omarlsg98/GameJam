@@ -67,10 +67,10 @@ MonoBehaviour:
     type: 1
     prefab: {fileID: 0}
   totalStats:
-    damage: 20
+    damage: 10
     attackSpeed: 1
     range: 1
-    life: 50
+    life: 35
     loadCapacity: 10
     weight: 1
     energyConsumption: 1
