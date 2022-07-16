@@ -192,13 +192,17 @@ public class Demon : MonoBehaviour
     
     public void attack(Demon adversary){
         if(attackCoolDown.isReady()){
+            animateAttack();
             adversary.applyHit(this.totalStats.damage);
             attackCoolDown.turnOnCooldown();
         }
     }
 
     private void animateAttack(){
-        //animator.SetTrigger("Attack01");
+        for (int i = 0; i <= 6; i++){
+            Animator animator = gameObject.transform.GetChild(i).gameObject.GetComponent<Animator>();
+            animator.SetTrigger("Attacking");
+        }
     }
 
     private void animateDamage(){
