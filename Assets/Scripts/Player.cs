@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
 
     private void putPartInBox(GameObject part){
         part.transform.position = partSpawnPoint.transform.position;
-        part.transform.rotation = Random.rotation;
+        part.transform.rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f));
         part.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         part.GetComponent<SpriteRenderer>().sortingOrder = 2;
     }
