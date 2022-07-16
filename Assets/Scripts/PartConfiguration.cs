@@ -87,19 +87,15 @@ public class PartConfiguration : MonoBehaviour
 
     void OnMouseEnter()
     {
-        Debug.Log("Mouse is over " + gameObject.transform.name);
+        //Debug.Log("Mouse is over " + gameObject.transform.name);
     }
 
     void OnMouseOver(){
         if(Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)){
             if (inBox) {
                 player.addBodyPart(gameObject);
-                this.onTable = true;
-                this.inBox = false; 
             } else if (onTable) {
                 player.removeBodyPart(gameObject);
-                this.onTable = false;
-                this.inBox = true;
             }
         }
     }

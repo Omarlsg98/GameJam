@@ -7,6 +7,7 @@ using static Main;
 using static DiscreteCoordinate;
 using static Demon;
 using static Head;
+using static SpriteEffects;
 
 public class Player : MonoBehaviour
 {
@@ -114,17 +115,27 @@ public class Player : MonoBehaviour
     }
 
     public void putPartInBox(GameObject part){
-        part.transform.parent = partsParent.transform;
+        PartConfiguration partConf = part.GetComponent<PartConfiguration>();
+        if (partConf != null){
+            partConf.inBox = true;
+            partConf.onTable = false;
+        }
+        part.transform.SetParent(partsParent.transform);
         part.transform.position = partSpawnPoint.transform.position;
         part.transform.rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f));
         part.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         SpriteRenderer renderer = part.transform.GetChild(0).GetComponent<SpriteRenderer>();
         renderer.sortingOrder = 2;
         renderer.flipX = false;
-        SpriteEffects.changeSpriteAlpha(renderer, 1);
+        SpriteEffects.changeSpriteAlpha(renderer, 1.0f);
     }
 
     private void putPartInTable(GameObject part, int indexChild){
+        PartConfiguration partConf = part.GetComponent<PartConfiguration>();
+        if (partConf != null){
+            partConf.inBox = false;
+            partConf.onTable = true;
+        }
         part.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         GameObject placeHolderPart = demonTablePlaceHolder.transform.GetChild(indexChild).gameObject;
         part.transform.position = placeHolderPart.transform.position;

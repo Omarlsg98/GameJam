@@ -536,7 +536,7 @@ GameObject:
   - component: {fileID: 1985186352549522639}
   m_Layer: 0
   m_Name: Head
-  m_TagString: Untagged
+  m_TagString: NotLootable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1403,7 +1403,7 @@ GameObject:
   - component: {fileID: 8219448477452220722}
   m_Layer: 0
   m_Name: LootBag
-  m_TagString: Untagged
+  m_TagString: NotLootable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

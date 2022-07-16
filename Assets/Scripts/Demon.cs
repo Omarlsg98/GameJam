@@ -64,7 +64,7 @@ public class Demon : MonoBehaviour
         this.grid = grid;
         grid.getTile(actPosition).updateStatus(false, isPlayer);
 
-        this.vanishCoolDown = new CoolDown(20.0f);
+        this.vanishCoolDown = new CoolDown(60.0f);
         this.vanishCoolDown.turnOnCooldown();
         this.spawCoolDown = new CoolDown(0.15f);
         
@@ -189,6 +189,7 @@ public class Demon : MonoBehaviour
                         return;
                     } else if (isLootFull()){
                         depositParts();
+                        return;
                     }
                 }
                 horizontalAxis = -1;
@@ -197,7 +198,7 @@ public class Demon : MonoBehaviour
         }
     }
     
-    private int move(int verticalAxis, int horizontalAxis)
+    private int move(int verticalAxis, int horizontalAxis, bool pushedBack = false)
     {   
         horizontalAxis = isPlayer? horizontalAxis : -horizontalAxis;
         if (movementCoolDown.isReady()){     
@@ -209,7 +210,8 @@ public class Demon : MonoBehaviour
                 newPosition =  new DiscreteCoordinate(actPosition.y, actPosition.x + horizontalAxis);
             }
             if (grid.verifyPosition(newPosition) && newPosition != null){
-                flipDemon(horizontalAxis);
+                if(!pushedBack)
+                    flipDemon(horizontalAxis);
                 grid.getTile(actPosition).updateStatus(true, isPlayer);
                 grid.getTile(newPosition).updateStatus(false, isPlayer);
                 this.actPosition = newPosition;
@@ -274,7 +276,7 @@ public class Demon : MonoBehaviour
     public void applyPushBack(){
         movementCoolDown.turnOffCooldown();
         attackCoolDown.turnOnCooldown();
-        move(0, -1);
+        move(0, -1, true);
     }
 
     public void applyHit(float damage){
@@ -309,7 +311,7 @@ public class Demon : MonoBehaviour
         for (int i = 0; i < gameObject.transform.childCount; i++){
             Transform child = gameObject.transform.GetChild(i);
             if (child == null)
-                return;
+                continue;
             if (child.name == "Head")
                 Destroy(child.gameObject);
             Rigidbody2D rigidBody = child.gameObject.GetComponent<Rigidbody2D>();
@@ -329,7 +331,7 @@ public class Demon : MonoBehaviour
         for (int i = 0; i < gameObject.transform.childCount; i++){
             Transform child = gameObject.transform.GetChild(i).GetChild(0);
             if (child == null)
-                break;
+                continue;
             SpriteRenderer renderer = child.gameObject.GetComponent<SpriteRenderer>();
             SpriteEffects.changeSpriteAlpha(renderer, vanishFactor);
         } 
@@ -387,7 +389,7 @@ public class Demon : MonoBehaviour
     private void destroyDemon(){
         if(this.isPlayer){
             mainController.playerDemons.Remove(this);
-        }else {
+        } else {
             mainController.enemyDemons.Remove(this);
         }
         mainController.toScavenge.Remove(this);
@@ -396,28 +398,36 @@ public class Demon : MonoBehaviour
 
     private void recallDemon(){
         depositParts();
-        for (int i = 0; i < gameObject.transform.childCount; i++){
+        List<GameObject> parts = new List<GameObject>();
+        for (int i = 0; i < this.gameObject.transform.childCount ; i++){
             GameObject part = gameObject.transform.GetChild(i).gameObject;
-            if (part.transform.name == "Head" || part.transform.name == "LootBag")
-                break;
-            this.putPartInBox(part);
+            if (part.tag == "NotLootable"){
+                continue;
+            }
+            parts.Add(part);
         }
+        this.putPartsInBox(parts);
+        grid.getTile(actPosition).updateStatus(true, isPlayer);
         destroyDemon();
     }
 
     private void depositParts(){
-        for (int i = 0; i < this.lootBag.transform.childCount; i++){
+        List<GameObject> parts = new List<GameObject>();
+         for (int i = 0; i < this.lootBag.transform.childCount; i++){
             GameObject part = this.lootBag.transform.GetChild(i).gameObject;
-            this.putPartInBox(part);
+            parts.Add(part);
         }
+        this.putPartsInBox(parts);
         this.currentLoad = 0;
     }
 
-    private void putPartInBox(GameObject part){
-        if (isPlayer){
-            mainController.playerController.putPartInBox(part);
-        }else{
-            Destroy(part);
+    private void putPartsInBox(List<GameObject> parts){
+        foreach(GameObject part in parts){
+            if (isPlayer){
+                mainController.playerController.putPartInBox(part);
+            }else{
+                Destroy(part);
+            }
         }
     }
 }
