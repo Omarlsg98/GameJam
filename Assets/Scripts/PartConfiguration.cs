@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartConfiguration : MonoBehaviour
+[System.Serializable]
+public class PartData
 {
     private static int partsNumber = 5;
 
@@ -18,7 +19,7 @@ public class PartConfiguration : MonoBehaviour
     public List<SpecialSkill> skills;
     public PartType type;
 
-    public PartConfiguration(PartConfiguration part){
+    public PartData(PartData part){
         this.damage = part.damage;
         this.attackSpeed = part.attackSpeed;
         this.range = part.range;
@@ -32,13 +33,13 @@ public class PartConfiguration : MonoBehaviour
         this.type = part.type;
     }
 
-    public static PartConfiguration getTotalStats(GameObject[] parts){
-        PartConfiguration result = null;
+    public static PartData getTotalStats(GameObject[] parts){
+        PartData result = null;
         for(int i = 0; i < parts.Length; i++){
-            PartConfiguration part = parts[i].GetComponent<PartConfiguration>();
+            PartData part = parts[i].GetComponent<PartConfiguration>().partData;
             if (part != null){
                 if (result == null){
-                    result =  new PartConfiguration(part);
+                    result =  new PartData(part);
                 }else{ 
                     result.damage += part.damage;
                     result.attackSpeed += part.attackSpeed;
@@ -53,18 +54,35 @@ public class PartConfiguration : MonoBehaviour
                 }
             }
         }
-        result.damage /= PartConfiguration.partsNumber;
+        result.damage /= PartData.partsNumber;
         //result.life = result.life;
         //result.energyConsumption = result.energyConsumption;
 
-        result.attackSpeed /= PartConfiguration.partsNumber;
-        result.range = (int)(result.range/PartConfiguration.partsNumber);
-        result.loadCapacity /= PartConfiguration.partsNumber;
-        result.weight /= PartConfiguration.partsNumber;
-        result.luck /= PartConfiguration.partsNumber;
-        result.movementSpeed /= PartConfiguration.partsNumber;
+        result.attackSpeed /= PartData.partsNumber;
+        result.range = (int)(result.range/PartData.partsNumber);
+        result.loadCapacity /= PartData.partsNumber;
+        result.weight /= PartData.partsNumber;
+        result.luck /= PartData.partsNumber;
+        result.movementSpeed /= PartData.partsNumber;
         
         return result;
+    }
+}
+
+public class PartConfiguration : MonoBehaviour
+{
+    public PartData partData;
+
+    void OnMouseEnter()
+    {
+        Debug.Log("Mouse is over " + gameObject.transform.name);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.name == "DeleteLine"){
+            Destroy(gameObject);
+        }
     }
 }
 

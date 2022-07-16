@@ -21,4 +21,12 @@ public class Player : MonoBehaviour
 
         Demon.instantiateDemon(demon, grid, parts, head, new DiscreteCoordinate(0,0), main.difficultyFactor, true);
     }
+
+    void Update(){
+        mouseHovering();
+    }
+    
+    private void mouseHovering(){
+     
+    }
 }

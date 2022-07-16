@@ -17,7 +17,7 @@ public class Demon : MonoBehaviour
 
     private GameObject[] parts;
     private GameObject head;
-    private PartConfiguration totalStats;
+    private PartData totalStats;
 
     private float maxLife;
     private float actualLife;
@@ -48,7 +48,7 @@ public class Demon : MonoBehaviour
 
         this.parts = parts;
         this.head = head;
-        this.totalStats = PartConfiguration.getTotalStats(parts);
+        this.totalStats = PartData.getTotalStats(parts);
         this.maxLife = this.totalStats.life;
         this.actualLife = this.maxLife;
         this.movementCoolDown = new CoolDown(1/this.totalStats.movementSpeed);
@@ -105,6 +105,7 @@ public class Demon : MonoBehaviour
                 Destroy(gameObject.transform.GetChild(i).gameObject);
             }
             spawnIndex += 1;
+            movementCoolDown.turnOnCooldown();
         }
     }
 
@@ -142,7 +143,7 @@ public class Demon : MonoBehaviour
     }
 
     public bool isAlive(){
-        return this.actualLife > 0;
+        return this.actualLife > 0 && this.spawnIndex == 7;
     }
     
     public void attack(){
