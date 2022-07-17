@@ -5,7 +5,7 @@ using UnityEngine;
 using static Grid; 
 using static Demon;
 using static Player;
-
+using static HeadQuarter;
 
 public class Main : MonoBehaviour
 {   
@@ -27,9 +27,13 @@ public class Main : MonoBehaviour
 
     public Player playerController;
 
+    public HeadQuarter playerHQ;
+    public HeadQuarter enemyHQ;
+
     void Awake()
     {
         actualGrid = new Grid(gridHorizontal, gridVertical,gridMinX, gridMinY, gridHorizontalStep, gridVerticalStep, tilePrefab, gridHolder);
+        playerHQ = GetComponent<HeadQuarter>();
     }
 
     void Update()

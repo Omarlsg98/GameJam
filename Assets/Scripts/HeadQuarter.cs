@@ -52,11 +52,11 @@ public class HeadQuarter : MonoBehaviour
     }
 
     public bool hasWon(){
-        return soulsLevel > objectiveSoulLevel;
+        return soulsLevel >= objectiveSoulLevel;
     }
 
      public bool hasLost(){
-        return soulsLevel <= 0;
+        return getTotalInventory() == 0;
     }
 
     public void putSoulTable(SoulType soulType){
@@ -76,18 +76,23 @@ public class HeadQuarter : MonoBehaviour
         newSoulCoolDown.updateCoolDown();
         modifyNextSoulBar();
         if (newSoulCoolDown.isReady()){
-            SoulType soulToAdd;
-            float randomNumber = Random.Range(0, sumSoulProbabilities);
-            if (randomNumber < greenSoul.getSoulData().spawnProbability){
-                soulToAdd = SoulType.green;
-            }else if(randomNumber < greenSoul.getSoulData().spawnProbability + redSoul.getSoulData().spawnProbability){
-                soulToAdd = SoulType.red;
-            }else{
-                soulToAdd = SoulType.blue;
-            }
+            SoulType soulToAdd = generateRandomSoulType();
             addSoulsToStock(soulToAdd, 1);
             newSoulCoolDown.turnOnCooldown();
         }
+    }
+
+    public SoulType generateRandomSoulType(){
+        SoulType soulType;
+        float randomNumber = Random.Range(0, sumSoulProbabilities);
+        if (randomNumber < greenSoul.getSoulData().spawnProbability){
+            soulType = SoulType.green;
+        }else if(randomNumber < greenSoul.getSoulData().spawnProbability + redSoul.getSoulData().spawnProbability){
+            soulType = SoulType.red;
+        }else{
+            soulType = SoulType.blue;
+        }
+        return soulType;
     }
 
     public void increaseSoulLevel(SoulType soulType){
@@ -150,9 +155,18 @@ public class HeadQuarter : MonoBehaviour
         return valueUpdated;
     }
 
-    public void applyHit(int damage){
-        this.soulsLevel -= damage;
-        modifySoulBar();
+    public int getTotalInventory(){
+        return greenSoul.inventory + blueSoul.inventory + redSoul.inventory;
+    }
+    public void applyHit(){
+        if(isPlayer){
+            if (getTotalInventory() != 0){
+                SoulType soulToAdd = generateRandomSoulType();
+                while(!addSoulsToStock(soulToAdd, -1)){
+                    soulToAdd = generateRandomSoulType();
+                }
+            }
+        }
         //TODO(omar): Spawn soul
     }
 

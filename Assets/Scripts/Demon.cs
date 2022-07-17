@@ -159,16 +159,22 @@ public class Demon : MonoBehaviour
 
     public void think(){
         if (head.type == HeadType.Warrior){
-            move(0, 1);
             int modifier = isPlayer? totalStats.range : -totalStats.range;
-            DiscreteCoordinate attackPosition =  new DiscreteCoordinate(this.actPosition.y, this.actPosition.x + modifier);
+            int rangeX = this.actPosition.x + modifier;
+            if ((rangeX == -1 && !isPlayer) || (rangeX == mainController.gridHorizontal && isPlayer)){
+                attackHeadQuarter();
+                return;
+            }
+            DiscreteCoordinate attackPosition =  new DiscreteCoordinate(this.actPosition.y, rangeX);
             foreach (Demon adversary in adversaryDemons)
             {
-                if (adversary.isInPosition(attackPosition) && adversary.isAlive()){
+                if ((adversary.isInPosition(attackPosition) || adversary.isInPosition(actPosition))
+                    && adversary.isAlive()){
                     attack(adversary);
-                    break;
+                    return;
                 }
             }
+            move(0, 1);
         } else if (head.type == HeadType.Scavenger){
             int horizontalAxis = 0;
             int verticalAxis = 0;
@@ -240,6 +246,16 @@ public class Demon : MonoBehaviour
         if(attackCoolDown.isReady()){
             animateAttack();
             adversary.applyHit(this.totalStats.damage);
+            this.consumeEnergy();
+            attackCoolDown.turnOnCooldown();
+        }
+    }
+
+    public void attackHeadQuarter(){
+        if(attackCoolDown.isReady()){
+            animateAttack();
+            HeadQuarter adversaryHeadQuarter = isPlayer? mainController.enemyHQ : mainController.playerHQ;
+            adversaryHeadQuarter.applyHit();
             this.consumeEnergy();
             attackCoolDown.turnOnCooldown();
         }
