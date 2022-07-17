@@ -17,7 +17,7 @@ public class EnemyHub : MonoBehaviour
     private Grid grid;
     private Main main;
 
-    private float timeForEachWave = 10.0f;
+    public float timeForEachWave = 10.0f;
     private CoolDown waveCoolDown;
     private System.Random ranProbSpawn;
 
@@ -51,6 +51,7 @@ public class EnemyHub : MonoBehaviour
                     spawnDemon();
                 }
             }
+            Debug.Log(waveNum);
             waveCoolDown.turnOnCooldown();
         }
     }
@@ -66,7 +67,7 @@ public class EnemyHub : MonoBehaviour
 
         Demon newDemon = Demon.instantiateDemon(enemiesPrefabs[0], grid, null, null, 
                                                 newPosition, 
-                                                false, main);
+                                                false, main, 200);
         for (int i = 0; i < newDemon.transform.childCount; i++){
             Transform child = newDemon.transform.GetChild(i);
             if(child.transform.GetComponent<PartConfiguration>()!=null){

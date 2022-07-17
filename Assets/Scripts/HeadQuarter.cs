@@ -6,6 +6,7 @@ using static Main;
 
 using static CoolDown;
 using static SoulInventory;
+using static Player;
 
 public class HeadQuarter : MonoBehaviour
 {
@@ -14,12 +15,18 @@ public class HeadQuarter : MonoBehaviour
     public CoolDown newSoulCoolDown;
 
     public SoulInventory greenSoul;
-    public SoulInventory redSoul;
     public SoulInventory blueSoul;
+    public SoulInventory redSoul;
     private float sumSoulProbabilities;
     public bool isPlayer;
+    public GameObject soulLevelBar;
+    public GameObject nextSoulBar;
+
+    private Player playerController; 
     
     void Start(){
+        playerController = GetComponent<Player>();
+        modifySoulBar();
         greenSoul.setSoulData();
         redSoul.setSoulData();
         blueSoul.setSoulData();
@@ -45,8 +52,22 @@ public class HeadQuarter : MonoBehaviour
         return soulsLevel <= 0;
     }
 
+    public void putSoulTable(SoulType soulType){
+        if (addSoulsToStock(soulType, -1)){
+            playerController.addSoulToTable(soulType);
+        }
+    }
+
+    public void removeSoulTable(SoulType soulType){
+        if (playerController.removeSoulFromTable(soulType)){
+            addSoulsToStock(soulType, 1);
+        }
+    }
+
+
     public void generateRandomNewSoul(){
         newSoulCoolDown.updateCoolDown();
+        modifyNextSoulBar();
         if (newSoulCoolDown.isReady()){
             SoulType soulToAdd;
             float randomNumber = Random.Range(0, sumSoulProbabilities);
@@ -82,30 +103,50 @@ public class HeadQuarter : MonoBehaviour
             return;
         }
         this.soulsLevel += souls;
+        modifySoulBar();
     }
 
-    public void addSoulsToStock(SoulType soulType, int souls){
+    public bool addSoulsToStock(SoulType soulType, int souls){
         switch (soulType)
         {
             case SoulType.blue:
-            blueSoul.inventory += souls;
+                if (souls + blueSoul.inventory >= 0){
+                    blueSoul.inventory += souls;
+                    return true;
+                }
             break;
 
             case SoulType.green:
-            greenSoul.inventory += souls;
+                if (souls + greenSoul.inventory >= 0){
+                    greenSoul.inventory += souls;
+                    return true;
+                }
             break;
 
             case SoulType.red:
-            redSoul.inventory += souls;
+                if (souls + redSoul.inventory >= 0){
+                    redSoul.inventory += souls;
+                    return true;
+                }
             break;
 
             default:
-            return;
+            break;
         }
+        return false;
     }
 
     public void applyHit(int damage){
         this.soulsLevel -= damage;
+        modifySoulBar();
         //TODO(omar): Spawn soul
+    }
+
+    private void modifySoulBar(){
+        this.soulLevelBar.transform.localScale = new Vector3(this.soulsLevel/this.objectiveSoulLevel, 1, 1);
+    }
+
+    private void modifyNextSoulBar(){
+        this.nextSoulBar.transform.localScale = new Vector3(1 - this.newSoulCoolDown.getPercentageToWait(), 1, 1);
     }
 }

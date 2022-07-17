@@ -8,6 +8,8 @@ using static DiscreteCoordinate;
 using static Demon;
 using static Head;
 using static SpriteEffects;
+using static SoulType;
+using static HeadQuarter;
 
 public class Player : MonoBehaviour
 {
@@ -26,11 +28,15 @@ public class Player : MonoBehaviour
 
     private Grid grid;
     private Main main;
+    private HeadQuarter playerHq;
 
     private List<Demon> demons;
 
+    public int[] soulInventory = new int[]{0, 0, 0};
+
     void Start(){
         main = GetComponent<Main>();
+        playerHq = GetComponent<HeadQuarter>();
         grid = main.actualGrid;
         demons = new List<Demon>();
         main.playerDemons = demons;
@@ -117,6 +123,18 @@ public class Player : MonoBehaviour
         putPartInTable(this.headInTable, 3);
     }
 
+    public void addSoulToTable(SoulType soulType){
+        soulInventory[(int)soulType] += 1;
+    }
+
+    public bool removeSoulFromTable(SoulType soulType){
+        if (soulInventory[(int)soulType] > 0){
+            soulInventory[(int)soulType] -= 1;
+            return true;
+        }
+        return false;
+    }
+
     public void putPartInBox(GameObject part){
         PartConfiguration partConf = part.GetComponent<PartConfiguration>();
         if (partConf != null){
@@ -146,17 +164,54 @@ public class Player : MonoBehaviour
         part.transform.rotation = placeHolderPart.transform.rotation;
     }
 
+    private int consumeTableSouls(){
+        int totalEnergyObtained = 0;
+        for (int i = 0; i < soulInventory.Length; i++){
+            switch ((SoulType) i)
+            {
+                case SoulType.blue:
+                for (int j = 0; j < soulInventory[i]; j++)
+                    totalEnergyObtained += playerHq.blueSoul.getSoulData().consumeSoul();
+                break;
+
+                case SoulType.green:
+                for (int j = 0; j < soulInventory[i]; j++)
+                    totalEnergyObtained += playerHq.greenSoul.getSoulData().consumeSoul();
+                break;
+
+                case SoulType.red:
+                for (int j = 0; j < soulInventory[i]; j++)
+                    totalEnergyObtained += playerHq.redSoul.getSoulData().consumeSoul();
+                break;
+
+                default:
+                break;
+            }
+            soulInventory[i] = 0;
+        }
+        return totalEnergyObtained;
+    }
+
+    private bool hasSouls(){
+        for (int i = 0; i < soulInventory.Length; i++){
+            if(soulInventory[i] > 0)
+                return true;
+        }
+        return false;
+    }
+
     public void spawnDemon(){
         DiscreteCoordinate newPosition = new DiscreteCoordinate(rowSelected, 0);
-        if (head != null && parts[2] != null && !grid.getTile(newPosition).isPlayerOnTile){
+        if (head != null && parts[2] != null && !grid.getTile(newPosition).isPlayerOnTile && hasSouls()){
             foreach(Demon adversary in main.enemyDemons){
                 if (adversary.isInPosition(newPosition)){
                     adversary.applyPushBack();
                 }
             }
+            int totalEnergy = consumeTableSouls();
             Demon newDemon = Demon.instantiateDemon(demonPrefab, grid, parts, head, 
                                                     newPosition,
-                                                    true, main);
+                                                    true, main, totalEnergy);
             demons.Add(newDemon);
             head = null;
             Destroy(headInTable);

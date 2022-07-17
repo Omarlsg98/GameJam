@@ -46,21 +46,23 @@ public class Demon : MonoBehaviour
     private List<Demon> toScavenge;
     private GameObject lootBag;
     private float currentLoad;
+
+    private float totalEnergy;
     
 
     private static string[] partNames = new string[]{"BackArm", "BackLeg", "Chest", "Head", "FrontLeg", "FrontArm"};
 
     public static Demon instantiateDemon(GameObject prefab, Grid grid, GameObject[] parts, Head head, 
                                         DiscreteCoordinate position, bool isPlayer,
-                                        Main main){
+                                        Main main, float totalEnergy){
         GameObject demonGameObject = Instantiate(prefab, grid.getTilePosition(position), Quaternion.identity);
         Demon demon = demonGameObject.GetComponent<Demon>();
-        demon.setupDemon(grid, parts, head, position, isPlayer, main);
+        demon.setupDemon(grid, parts, head, position, isPlayer, main, totalEnergy);
         return demon;
     }
 
     public void setupDemon(Grid grid, GameObject[] parts, Head head, DiscreteCoordinate actPosition, 
-                            bool isPlayer, Main main){
+                            bool isPlayer, Main main, float totalEnergy){
         this.grid = grid;
         grid.getTile(actPosition).updateStatus(false, isPlayer);
 
@@ -72,6 +74,7 @@ public class Demon : MonoBehaviour
         this.toScavenge = mainController.toScavenge;
         this.isPlayer = isPlayer;
         this.adversaryDemons = main.enemyDemons;
+        this.totalEnergy = totalEnergy;
 
         if (this.isPlayer){
             this.spawnIndex = 0;
@@ -207,7 +210,7 @@ public class Demon : MonoBehaviour
             if ((verticalAxis == 1 | verticalAxis == -1) && this.actPosition.x == this.spawnColumnIndex){
                 newPosition =  new DiscreteCoordinate(actPosition.y + verticalAxis, actPosition.x);
             }
-            else if (horizontalAxis == 1 | horizontalAxis == -1){
+            else if (horizontalAxis <= 1 | horizontalAxis >= -1){
                 newPosition =  new DiscreteCoordinate(actPosition.y, actPosition.x + horizontalAxis);
             }
             if (grid.verifyPosition(newPosition) && newPosition != null){
@@ -217,6 +220,7 @@ public class Demon : MonoBehaviour
                 grid.getTile(newPosition).updateStatus(false, isPlayer);
                 this.actPosition = newPosition;
                 gameObject.transform.position = grid.getTilePosition(newPosition);
+                this.consumeEnergy();
                 movementCoolDown.turnOnCooldown();
                 //soundController.reproduceMovement();
                 return 1;
@@ -233,6 +237,7 @@ public class Demon : MonoBehaviour
         if(attackCoolDown.isReady()){
             animateAttack();
             adversary.applyHit(this.totalStats.damage);
+            this.consumeEnergy();
             attackCoolDown.turnOnCooldown();
         }
     }
@@ -251,6 +256,7 @@ public class Demon : MonoBehaviour
             } else {
                 Destroy(part);
             }
+            this.consumeEnergy();
             attackCoolDown.turnOnCooldown();
         }
     }
@@ -280,6 +286,13 @@ public class Demon : MonoBehaviour
         move(0, -1, true);
     }
 
+    private void consumeEnergy(){
+        this.totalEnergy -= this.totalStats.energyConsumption;
+
+        if (!isAlive()){
+            startDeadSequence();
+        }
+    }
     public void applyHit(float damage){
         this.actualLife -= isPlayer? (damage * difficultyFactor) : damage;
         //float lifePercentage = (float)this.actualLife/this.maxLife;
@@ -287,18 +300,23 @@ public class Demon : MonoBehaviour
         //soundController.reproduceDamage();
         //animateDamage();
         if (!isAlive()){
-            grid.getTile(actPosition).updateStatus(true, isPlayer);
-            mainController.toScavenge.Add(this);
-            freeScavengeLoot();
-            animateDead();
+            startDeadSequence();
         }
     }
+
+    private void startDeadSequence(){
+        grid.getTile(actPosition).updateStatus(true, isPlayer);
+        mainController.toScavenge.Add(this);
+        freeScavengeLoot();
+        animateDead();
+    }
+    
 
     private bool isLootFull(){
         return this.currentLoad > this.totalStats.loadCapacity;
     }
     public bool isAlive(){
-        return this.actualLife > 0 && this.spawnIndex == 7;
+        return this.actualLife > 0 && this.spawnIndex == 7 && this.totalEnergy > 0;
     }
 
     private void freeScavengeLoot(){
