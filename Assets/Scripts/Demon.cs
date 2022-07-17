@@ -249,7 +249,7 @@ public class Demon : MonoBehaviour
                 gameObject.transform.position = grid.getTilePosition(newPosition);
                 this.consumeEnergy();
                 movementCoolDown.turnOnCooldown();
-                //soundController.reproduceMovement();
+                soundController.reproduceMovement();
                 return 1;
             }else {
                 return 0;
@@ -262,6 +262,7 @@ public class Demon : MonoBehaviour
 
     public void attack(Demon adversary){
         if(attackCoolDown.isReady()){
+            soundController.reproduceAttack();
             animateAttack();
             adversary.applyHit(this.totalStats.damage);
             this.consumeEnergy();
@@ -271,6 +272,7 @@ public class Demon : MonoBehaviour
 
     public void attackHeadQuarter(){
         if(attackCoolDown.isReady()){
+            soundController.reproduceAttack();
             animateAttack();
             HeadQuarter adversaryHeadQuarter = isPlayer? mainController.enemyHQ : mainController.playerHQ;
             adversaryHeadQuarter.applyHit();
@@ -282,6 +284,7 @@ public class Demon : MonoBehaviour
     private void tryToScavangePart(Demon deadBody){
         if(attackCoolDown.isReady()){
             animateAttack(); //TODO(felivans): animateScavange
+            soundController.repoduceScavenge();
             GameObject part = deadBody.removePart();
             if(MyRandom.randomBool(this.totalStats.luck)){
                 part.transform.parent = this.lootBag.transform;
@@ -334,7 +337,7 @@ public class Demon : MonoBehaviour
         this.actualLife -= isPlayer? (damage * difficultyFactor) : damage;
         //float lifePercentage = (float)this.actualLife/this.maxLife;
         //spriteRenderer.material.color = new Color(1.0f, lifePercentage, lifePercentage);
-        //soundController.reproduceDamage();
+        soundController.reproduceDamage();
         //animateDamage();
         if (!isAlive()){
             startDeadSequence();
@@ -345,6 +348,7 @@ public class Demon : MonoBehaviour
         grid.getTile(actPosition).updateStatus(true, isPlayer);
         mainController.toScavenge.Add(this);
         freeScavengeLoot();
+        soundController.reproduceDeath();
         animateDead();
     }
     
