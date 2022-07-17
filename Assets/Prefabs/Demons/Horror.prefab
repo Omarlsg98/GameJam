@@ -59,10 +59,16 @@ MonoBehaviour:
       audio: {fileID: 0}
       secondsToWait: 0
     movementAudio:
-      audio: {fileID: 0}
+      audio: {fileID: 8300000, guid: bec5d7cd019bb3f408cdc4272aa36fb3, type: 3}
       secondsToWait: 0
     attackAudio:
-      audio: {fileID: 0}
+      audio: {fileID: 8300000, guid: 54956e26d1e79264391f42acee9d4b22, type: 3}
+      secondsToWait: 0
+    scavengeAudio:
+      audio: {fileID: 8300000, guid: bc240e1be17529a4ab5fa4320e4596e3, type: 3}
+      secondsToWait: 0
+    deathAudio:
+      audio: {fileID: 8300000, guid: 0abea2dc5f04d1041a9265b389ab5cef, type: 3}
       secondsToWait: 0
   head:
     type: 0
@@ -79,6 +85,11 @@ MonoBehaviour:
     movementSpeed: 0
     skills: 
     type: 0
+    rareType:
+      type: 0
+      probability: 0
+      multiplier: 0
+      color: {r: 0, g: 0, b: 0, a: 0}
   hasLegs: 1
 --- !u!82 &4595549691008928379
 AudioSource:
@@ -92,8 +103,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: 0.814
+  m_Pitch: 0.58
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -282,6 +293,11 @@ MonoBehaviour:
     movementSpeed: 3
     skills: 
     type: 0
+    rareType:
+      type: 0
+      probability: 0
+      multiplier: 0
+      color: {r: 0, g: 0, b: 0, a: 0}
   inBox: 0
   onTable: 0
 --- !u!50 &8801317028929872432
@@ -401,6 +417,11 @@ MonoBehaviour:
     movementSpeed: 1
     skills: 
     type: 0
+    rareType:
+      type: 0
+      probability: 0
+      multiplier: 0
+      color: {r: 0, g: 0, b: 0, a: 0}
   inBox: 0
   onTable: 0
 --- !u!50 &1972245434750359072
@@ -900,6 +921,11 @@ MonoBehaviour:
     movementSpeed: 1
     skills: 
     type: 1
+    rareType:
+      type: 0
+      probability: 0
+      multiplier: 0
+      color: {r: 0, g: 0, b: 0, a: 0}
   inBox: 0
   onTable: 0
 --- !u!50 &7894973445392180375
@@ -1019,6 +1045,11 @@ MonoBehaviour:
     movementSpeed: 1
     skills: 
     type: 0
+    rareType:
+      type: 0
+      probability: 0
+      multiplier: 0
+      color: {r: 0, g: 0, b: 0, a: 0}
   inBox: 0
   onTable: 0
 --- !u!50 &6257234371320033165
@@ -1327,6 +1358,11 @@ MonoBehaviour:
     movementSpeed: 3
     skills: 
     type: 0
+    rareType:
+      type: 0
+      probability: 0
+      multiplier: 0
+      color: {r: 0, g: 0, b: 0, a: 0}
   inBox: 0
   onTable: 0
 --- !u!50 &8055245187768813599
