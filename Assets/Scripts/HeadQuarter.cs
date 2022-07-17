@@ -34,8 +34,8 @@ public class HeadQuarter : MonoBehaviour
     private Main mainController;
     
     void Start(){
-        playerController = GetComponent<Player>();
-        mainController = GetComponent<Main>();
+        playerController = GameObject.FindWithTag("GameController").GetComponent<Player>();
+        mainController = GameObject.FindWithTag("GameController").GetComponent<Main>();
         modifySoulBar();
         greenSoul.setSoulData();
         redSoul.setSoulData();

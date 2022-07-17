@@ -5435,6 +5435,10 @@ PrefabInstance:
       propertyPath: inBox
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4663828992029535141, guid: 86d7ea2611318834889d6f2ab132a225, type: 3}
+      propertyPath: partData.range
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7048373692433653013, guid: 86d7ea2611318834889d6f2ab132a225, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -7153,19 +7157,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rarenessTypes:
   - type: 0
-    probability: 50
+    probability: 88
     multiplier: 1
     color: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
   - type: 1
-    probability: 75
+    probability: 95
     multiplier: 1.2
     color: {r: 0.10990305, g: 0.509434, b: 0.0019223545, a: 1}
   - type: 2
-    probability: 90
+    probability: 99
     multiplier: 1.6
     color: {r: 0.011039185, g: 0.00884653, b: 0.6698113, a: 1}
   - type: 3
-    probability: 98
+    probability: 99.9
     multiplier: 2
     color: {r: 0.9811321, g: 0.2906005, b: 0, a: 1}
   - type: 4

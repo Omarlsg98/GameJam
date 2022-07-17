@@ -155,7 +155,7 @@ MonoBehaviour:
   partData:
     damage: 20
     attackSpeed: 2
-    range: 1
+    range: 7
     life: 10
     loadCapacity: 10
     weight: 2.5
@@ -164,8 +164,13 @@ MonoBehaviour:
     movementSpeed: 1
     skills: 
     type: 0
+    rareType:
+      type: 0
+      probability: 0
+      multiplier: 0
+      color: {r: 0, g: 0, b: 0, a: 0}
   inBox: 0
-  inTable: 0
+  onTable: 0
 --- !u!50 &6100568873674089555
 Rigidbody2D:
   serializedVersion: 4

@@ -179,19 +179,21 @@ public class Demon : MonoBehaviour
 
     public void think(){
         if (head.type == HeadType.Warrior){
-            int modifier = isPlayer? totalStats.range : -totalStats.range;
-            int rangeX = this.actPosition.x + modifier;
-            if ((rangeX == -1 && !isPlayer) || (rangeX == mainController.gridHorizontal && isPlayer)){
-                attackHeadQuarter();
-                return;
-            }
-            DiscreteCoordinate attackPosition =  new DiscreteCoordinate(this.actPosition.y, rangeX);
-            foreach (Demon adversary in adversaryDemons)
-            {
-                if ((adversary.isInPosition(attackPosition) || adversary.isInPosition(actPosition))
-                    && adversary.isAlive()){
-                    attack(adversary);
+            for (int i = 0; i <= totalStats.range; i++){
+                int modifier = isPlayer? i : -i;
+                int rangeX = this.actPosition.x + modifier;
+                if ((rangeX == -1 && !isPlayer) || (rangeX == mainController.gridHorizontal && isPlayer)){
+                    attackHeadQuarter();
                     return;
+                }
+                DiscreteCoordinate attackPosition =  new DiscreteCoordinate(this.actPosition.y, rangeX);
+                foreach (Demon adversary in adversaryDemons)
+                {
+                    if ((adversary.isInPosition(attackPosition))
+                        && adversary.isAlive()){
+                        attack(adversary);
+                        return;
+                    }
                 }
             }
             move(0, 1);
@@ -201,8 +203,8 @@ public class Demon : MonoBehaviour
             if (this.toScavenge.Count != 0 && !isLootFull()){
                 Demon closestDemonToScavenge = getClosestDemonToScavenge();
                 (int verticalDiff, int horizontalDiff) = closestDemonToScavenge.getPositionDiffs(this.actPosition);
-                if (horizontalDiff <= 1 && horizontalDiff >= -1){
-                    tryToScavangePart(closestDemonToScavenge);
+                if (horizontalDiff <= totalStats.range && horizontalDiff >= -totalStats.range){
+                    tryToScavangePart(closestDemonToScavenge, horizontalDiff);
                     return;
                 }
                 if (verticalDiff != 0)
@@ -283,8 +285,13 @@ public class Demon : MonoBehaviour
         }
     }
     
-    private void tryToScavangePart(Demon deadBody){
+    private void tryToScavangePart(Demon deadBody, int horizontalDiff){
         if(attackCoolDown.isReady()){
+            if(horizontalDiff >= 0){
+                flipDemon(1);
+            }else{
+                flipDemon(-1);
+            }
             animateAttack(); //TODO(felivans): animateScavange
             soundController.repoduceScavenge();
             GameObject part = deadBody.removePart();
