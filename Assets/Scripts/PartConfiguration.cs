@@ -45,8 +45,8 @@ public class PartData
         this.range = (int)(part.range * rareType.multiplier);
         this.life = part.life * rareType.multiplier;
         this.loadCapacity = part.loadCapacity * rareType.multiplier;
-        this.weight = part.weight * rareType.multiplier/2;
-        this.energyConsumption = part.energyConsumption * rareType.multiplier/2;
+        this.weight = part.weight;
+        this.energyConsumption = part.energyConsumption * rareType.multiplier;
         this.luck = part.luck * rareType.multiplier;
         this.movementSpeed = part.movementSpeed * rareType.multiplier;
         this.skills = new List<SpecialSkill>(part.skills);

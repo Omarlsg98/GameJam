@@ -7098,7 +7098,7 @@ MonoBehaviour:
   - 0.6
   - 0.2
   - 0.2
-  demonSpawnVariability: 3
+  demonSpawnVariability: 4
   demonWaveIncrease: 1
   waveToIncrementRails: 15
   spawnBetweenMonsterCooldown:

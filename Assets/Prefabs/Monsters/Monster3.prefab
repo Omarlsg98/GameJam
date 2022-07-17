@@ -66,14 +66,20 @@ MonoBehaviour:
     attackAudio:
       audio: {fileID: 0}
       secondsToWait: 0
+    scavengeAudio:
+      audio: {fileID: 0}
+      secondsToWait: 0
+    deathAudio:
+      audio: {fileID: 0}
+      secondsToWait: 0
   head:
     type: 1
     prefab: {fileID: 0}
   totalStats:
     damage: 5
     attackSpeed: 2
-    range: 1
-    life: 20
+    range: 2
+    life: 60
     loadCapacity: 10
     weight: 1
     energyConsumption: 9
@@ -81,6 +87,11 @@ MonoBehaviour:
     movementSpeed: 1.2
     skills: 
     type: 0
+    rareType:
+      type: 0
+      probability: 0
+      multiplier: 0
+      color: {r: 0, g: 0, b: 0, a: 0}
   hasLegs: 1
 --- !u!61 &1555083153
 BoxCollider2D:
