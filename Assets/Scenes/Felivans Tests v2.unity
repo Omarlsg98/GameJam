@@ -194,6 +194,8 @@ MonoBehaviour:
   enemyDemons: []
   toScavenge: []
   playerController: {fileID: 0}
+  playerHQ: {fileID: 0}
+  enemyHQ: {fileID: 0}
 --- !u!114 &1356460316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b345014fa2ab24f4fa61a998c08ec98f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statsDisplayer: {fileID: 0}
   demonPrefab: {fileID: 86331095839678440, guid: 79f4e22b0b3fb594dbeda08acdefd7b2, type: 3}
   demonTablePlaceHolder: {fileID: 1548948641576539837}
   partSpawnPoint: {fileID: 155711548}
@@ -213,6 +216,9 @@ MonoBehaviour:
   rowSelectorTile: {fileID: 8188997209664106366}
   rowSelectorCoolDown:
     timeToWait: 0.3
+  soulInventory: 000000000000000000000000
+  soulsDisplayer: {fileID: 0}
+  soulExtractedDisplayer: {fileID: 0}
 --- !u!114 &1356460317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,7 +233,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesPrefabs:
   - {fileID: 8767433061664985549, guid: 2778a6384a2fd11459862aa43edd1d32, type: 3}
-  demonSpawnProbability: 0.0002
+  demonSpawnProbability: 0
+  timeForEachWave: 10
 --- !u!114 &1356460318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,13 +254,18 @@ MonoBehaviour:
   greenSoul:
     soulReference: {fileID: 0}
     inventory: 0
-  redSoul:
-    soulReference: {fileID: 0}
-    inventory: 0
   blueSoul:
     soulReference: {fileID: 0}
     inventory: 0
+  redSoul:
+    soulReference: {fileID: 0}
+    inventory: 0
   isPlayer: 0
+  soulLevelBar: {fileID: 0}
+  soulLevelText: {fileID: 0}
+  nextSoulBar: {fileID: 0}
+  soulsDisplayer: {fileID: 0}
+  soulExtractedDisplayer: {fileID: 0}
 --- !u!1 &1622738301
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,3 +395,60 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4296756246076925193, guid: 4f0e876f0cf9a2548b4a4ae6a6fdc75a, type: 3}
   m_PrefabInstance: {fileID: 5333401711348976247}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &9004911109894632366
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5150049532500621750, guid: ef7b0d33469b3dc4ea29476e80db5bb7, type: 3}
+      propertyPath: m_Name
+      value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 8119009422717785800, guid: ef7b0d33469b3dc4ea29476e80db5bb7, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8119009422717785800, guid: ef7b0d33469b3dc4ea29476e80db5bb7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 42.53235
+      objectReference: {fileID: 0}
+    - target: {fileID: 8119009422717785800, guid: ef7b0d33469b3dc4ea29476e80db5bb7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -6.3003416
+      objectReference: {fileID: 0}
+    - target: {fileID: 8119009422717785800, guid: ef7b0d33469b3dc4ea29476e80db5bb7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8119009422717785800, guid: ef7b0d33469b3dc4ea29476e80db5bb7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8119009422717785800, guid: ef7b0d33469b3dc4ea29476e80db5bb7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8119009422717785800, guid: ef7b0d33469b3dc4ea29476e80db5bb7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8119009422717785800, guid: ef7b0d33469b3dc4ea29476e80db5bb7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8119009422717785800, guid: ef7b0d33469b3dc4ea29476e80db5bb7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8119009422717785800, guid: ef7b0d33469b3dc4ea29476e80db5bb7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8119009422717785800, guid: ef7b0d33469b3dc4ea29476e80db5bb7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ef7b0d33469b3dc4ea29476e80db5bb7, type: 3}
