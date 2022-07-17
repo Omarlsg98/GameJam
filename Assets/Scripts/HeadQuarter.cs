@@ -14,12 +14,15 @@ public class HeadQuarter : MonoBehaviour
     public CoolDown newSoulCoolDown;
 
     public SoulInventory greenSoul;
-    public SoulInventory redSoul;
     public SoulInventory blueSoul;
+    public SoulInventory redSoul;
     private float sumSoulProbabilities;
     public bool isPlayer;
+    public GameObject soulLevelBar;
+    public GameObject nextSoulBar;
     
     void Start(){
+        modifySoulBar();
         greenSoul.setSoulData();
         redSoul.setSoulData();
         blueSoul.setSoulData();
@@ -47,6 +50,7 @@ public class HeadQuarter : MonoBehaviour
 
     public void generateRandomNewSoul(){
         newSoulCoolDown.updateCoolDown();
+        modifyNextSoulBar();
         if (newSoulCoolDown.isReady()){
             SoulType soulToAdd;
             float randomNumber = Random.Range(0, sumSoulProbabilities);
@@ -82,6 +86,7 @@ public class HeadQuarter : MonoBehaviour
             return;
         }
         this.soulsLevel += souls;
+        modifySoulBar();
     }
 
     public void addSoulsToStock(SoulType soulType, int souls){
@@ -106,6 +111,15 @@ public class HeadQuarter : MonoBehaviour
 
     public void applyHit(int damage){
         this.soulsLevel -= damage;
+        modifySoulBar();
         //TODO(omar): Spawn soul
+    }
+
+    private void modifySoulBar(){
+        this.soulLevelBar.transform.localScale = new Vector3(this.soulsLevel/this.objectiveSoulLevel, 1, 1);
+    }
+
+    private void modifyNextSoulBar(){
+        this.nextSoulBar.transform.localScale = new Vector3(1 - this.newSoulCoolDown.getPercentageToWait(), 1, 1);
     }
 }
