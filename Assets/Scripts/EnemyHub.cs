@@ -51,7 +51,6 @@ public class EnemyHub : MonoBehaviour
                     spawnDemon();
                 }
             }
-            Debug.Log(waveNum);
             waveCoolDown.turnOnCooldown();
         }
     }

@@ -2618,7 +2618,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesPrefabs:
   - {fileID: 8767433061664985549, guid: 2778a6384a2fd11459862aa43edd1d32, type: 3}
-  demonSpawnProbability: 40
+  demonSpawnProbability: 20
   timeForEachWave: 7
 --- !u!114 &1356460318
 MonoBehaviour:
