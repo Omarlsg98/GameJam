@@ -49,7 +49,7 @@ public class Main : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)){
+        if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.P)){
             gameIsOnPause = !gameIsOnPause;
             if (gameIsOver){
                 //change scene
