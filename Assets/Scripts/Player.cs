@@ -10,9 +10,11 @@ using static Head;
 using static SpriteEffects;
 using static SoulType;
 using static HeadQuarter;
+using static StatsDisplayer;
 
 public class Player : MonoBehaviour
 {
+    public StatsDisplayer statsDisplayer;
     public GameObject demonPrefab;
     private GameObject[] parts = new GameObject[5];
     private Head head;
@@ -43,6 +45,8 @@ public class Player : MonoBehaviour
         main.playerController = this;
         rowSelected = -1;
         moveSelectedRow(0);
+        parts = new GameObject[5];
+        displayCurrentStats();
     }
 
     void Update(){
@@ -102,6 +106,7 @@ public class Player : MonoBehaviour
 
         parts[index] = part;
         putPartInTable(part, indexChild);
+        displayCurrentStats();
     }
 
     public void removeBodyPart(GameObject part){
@@ -221,5 +226,9 @@ public class Player : MonoBehaviour
         } else {
             //TODO(felivans): spawn demon withou enough parts feedback.
         }
+    }
+
+    public void displayCurrentStats(){
+        this.statsDisplayer.changeDataDisplayed(PartData.getTotalStats(parts), true);
     }
 }

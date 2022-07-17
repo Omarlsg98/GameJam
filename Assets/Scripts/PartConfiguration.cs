@@ -57,18 +57,19 @@ public class PartData
                 }
             }
         }
-        result.damage /= PartData.partsNumber;
-        //result.life = result.life;
-        //result.energyConsumption = result.energyConsumption;
+        if (result != null){
+            result.damage /= PartData.partsNumber;
+            //result.life = result.life;
+            //result.energyConsumption = result.energyConsumption;
 
-        result.attackSpeed /= PartData.partsNumber;
-        result.range = (int)(result.range/PartData.partsNumber);
-        result.range = result.range == 0? 1 : result.range;
-        result.loadCapacity /= PartData.partsNumber;
-        result.weight /= PartData.partsNumber;
-        result.luck /= PartData.partsNumber;
-        result.movementSpeed /= PartData.partsNumber;
-        
+            result.attackSpeed /= PartData.partsNumber;
+            result.range = (int)(result.range/PartData.partsNumber);
+            result.range = result.range == 0? 1 : result.range;
+            result.loadCapacity /= PartData.partsNumber;
+            result.weight /= PartData.partsNumber;
+            result.luck /= PartData.partsNumber;
+            result.movementSpeed /= PartData.partsNumber;
+        }
         return result;
     }
 }
@@ -87,7 +88,12 @@ public class PartConfiguration : MonoBehaviour
 
     void OnMouseEnter()
     {
-        //Debug.Log("Mouse is over " + gameObject.transform.name);
+        player.statsDisplayer.changeDataDisplayed(this.partData, false);
+    }
+
+    void OnMouseExit()
+    {
+        player.displayCurrentStats();
     }
 
     void OnMouseOver(){

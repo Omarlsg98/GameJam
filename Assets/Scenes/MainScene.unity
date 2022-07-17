@@ -316,7 +316,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: X10
+  m_text: x10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1336,7 +1336,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: X10
+  m_text: x10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3068,7 +3068,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: X10
+  m_text: x10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6639,6 +6639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b345014fa2ab24f4fa61a998c08ec98f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statsDisplayer: {fileID: 2061244494}
   demonPrefab: {fileID: 86331095839678440, guid: 79f4e22b0b3fb594dbeda08acdefd7b2, type: 3}
   demonTablePlaceHolder: {fileID: 1548948641576539837}
   partSpawnPoint: {fileID: 155711548}
@@ -9892,6 +9893,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2061244493}
+  - component: {fileID: 2061244494}
   m_Layer: 5
   m_Name: GeneralStats
   m_TagString: Untagged
@@ -9930,6 +9932,31 @@ RectTransform:
   m_AnchoredPosition: {x: 20.5, y: -17.2}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2061244494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061244492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f179619e2848b143a974d0cb47b8936, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  valTexts:
+  - {fileID: 1587071819}
+  - {fileID: 368770350}
+  - {fileID: 112233332}
+  - {fileID: 786647541}
+  - {fileID: 799472280}
+  - {fileID: 251130320}
+  - {fileID: 168172946}
+  - {fileID: 1383755354}
+  - {fileID: 598275597}
+  - {fileID: 1566282639}
+  - {fileID: 1617630899}
+  isHorror: 0
 --- !u!1001 &2107654284
 PrefabInstance:
   m_ObjectHideFlags: 0
