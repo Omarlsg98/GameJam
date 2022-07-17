@@ -20,4 +20,12 @@ public class Jukebox : MonoBehaviour
             audioSource.Play();
         }
     }
+
+    public void togglePitch(){
+        if (audioSource.pitch == 1){
+            audioSource.pitch = 0.5f;
+        }else {
+            audioSource.pitch = 1;
+        }
+    }
 }

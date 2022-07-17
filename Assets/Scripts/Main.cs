@@ -33,6 +33,7 @@ public class Main : MonoBehaviour
     public HeadQuarter playerHQ;
     public HeadQuarter enemyHQ;
 
+    public Jukebox jukeBox;
     public RarenessConfig rarenessConfig;
     public TextMeshProUGUI pausedText;
 
@@ -57,8 +58,10 @@ public class Main : MonoBehaviour
                 return;
             }
             if(gameIsOnPause){
+                jukeBox.togglePitch();
                 pausedText.text = "Game Paused";
             }else{
+                jukeBox.togglePitch();
                 pausedText.text = "";
             }
         }
