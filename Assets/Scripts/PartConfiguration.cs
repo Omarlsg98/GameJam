@@ -19,8 +19,14 @@ public class PartData
     public float energyConsumption = 1.0f; //Energy consume per action
     public float luck = 0.4f;  //chance of scavenge a part
     public float movementSpeed = 2; //tiles per second
+    public static int commonProbability = 50; //probability of part being of common rarenes
+    public static int uncommonProbability = 75; //probability of part being of uncommon rarenes
+    public static int rareProbability = 90; //probability of part being of rare rarenes
+    public static int epicProbability = 98; //probability of part being of epic rarenes
+    public static int legendaryProbability = 100; //probability of part being of legendary rarenes
     public List<SpecialSkill> skills;
     public PartType type;
+    public Rareness rareType;
 
     public PartData(PartData part){
         this.damage = part.damage;
@@ -34,6 +40,7 @@ public class PartData
         this.movementSpeed = part.movementSpeed;
         this.skills = new List<SpecialSkill>(part.skills);
         this.type = part.type;
+        this.rareType = part.rareType;
     }
 
     public static PartData getTotalStats(GameObject[] parts){
@@ -71,6 +78,24 @@ public class PartData
             result.movementSpeed /= PartData.partsNumber;
         }
         return result;
+    }
+
+    public void setRandomRareness(){
+        if(this.rareType!=Rareness.Common){
+            System.Random rand = new System.Random();
+            int valRand = rand.Next(1, 101);
+            if (valRand <= commonProbability){
+                rareType = Rareness.Common;
+            }else if(valRand <= uncommonProbability){
+                rareType = Rareness.Uncommon;
+            }else if(valRand <= rareProbability){
+                rareType = Rareness.Rare;
+            }else if(valRand <= epicProbability){
+                rareType = Rareness.Epic;
+            }else{
+                rareType = Rareness.Legendary;
+            }
+        }
     }
 }
 
@@ -127,5 +152,13 @@ public enum SpecialSkill{
 public enum PartType{
     Limb,
     Chest
+}
+
+public enum Rareness{
+    Common,
+    Uncommon,
+    Rare,
+    Epic,
+    Legendary
 }
 
