@@ -112,19 +112,21 @@ public class Demon : MonoBehaviour
     }
 
     void Update(){
-        if (spawnDemon())
-            return;
-        attackCoolDown.updateCoolDown();
-        if (isAlive()){
-            if (!this.hasBeenRecalled){
-                think();
+        if(!mainController.gameIsOnPause){
+            if (spawnDemon())
+                return;
+            attackCoolDown.updateCoolDown();
+            if (isAlive()){
+                if (!this.hasBeenRecalled){
+                    think();
+                }else{
+                    move(0, -1);
+                    if (this.actPosition.x == this.spawnColumnIndex)
+                        recallDemon();
+                }
             }else{
-                move(0, -1);
-                if (this.actPosition.x == this.spawnColumnIndex)
-                    recallDemon();
+                animateVanishProcess();
             }
-        }else{
-            animateVanishProcess();
         }
     }
 

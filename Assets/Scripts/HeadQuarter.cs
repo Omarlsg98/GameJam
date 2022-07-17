@@ -30,9 +30,12 @@ public class HeadQuarter : MonoBehaviour
     private Player playerController; 
     public SoulsDisplayer soulsDisplayer;
     public SoulsExtractedDisplayer soulExtractedDisplayer;
+
+    private Main mainController;
     
     void Start(){
         playerController = GetComponent<Player>();
+        mainController = GetComponent<Main>();
         modifySoulBar();
         greenSoul.setSoulData();
         redSoul.setSoulData();
@@ -43,13 +46,15 @@ public class HeadQuarter : MonoBehaviour
     }
 
     void Update(){
-        if (isPlayer){
-            if (hasWon()){
-                Debug.Log("WOOOOON");
-            } else if (hasLost()){
-                Debug.Log("LOOOOOST");
+        if(!mainController.gameIsOnPause){
+            if (isPlayer){
+                if (hasWon()){
+                    Debug.Log("WOOOOON");
+                } else if (hasLost()){
+                    Debug.Log("LOOOOOST");
+                }
+                generateRandomNewSoul();
             }
-            generateRandomNewSoul();
         }
     }
 

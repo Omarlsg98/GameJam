@@ -45,13 +45,15 @@ public class EnemyHub : MonoBehaviour
     }
 
     void Update(){
-        spawnWave();
+        if(!main.gameIsOnPause){
+            spawnWave();
 
-        spawnBetweenMonsterCooldown.updateCoolDown();
-        if (demonsToSpawn >= 0 && spawnBetweenMonsterCooldown.isReady()){
-            spawnDemon();
-            spawnBetweenMonsterCooldown.turnOnCooldown();
-            waveCoolDown.turnOnCooldown();
+            spawnBetweenMonsterCooldown.updateCoolDown();
+            if (demonsToSpawn >= 0 && spawnBetweenMonsterCooldown.isReady()){
+                spawnDemon();
+                spawnBetweenMonsterCooldown.turnOnCooldown();
+                waveCoolDown.turnOnCooldown();
+            }
         }
     }
 

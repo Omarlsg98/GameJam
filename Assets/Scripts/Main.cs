@@ -7,6 +7,8 @@ using static Demon;
 using static Player;
 using static HeadQuarter;
 
+using TMPro;
+
 public class Main : MonoBehaviour
 {   
     public GameObject gridHolder;
@@ -31,15 +33,25 @@ public class Main : MonoBehaviour
     public HeadQuarter enemyHQ;
 
     public RarenessConfig rarenessConfig;
+    public TextMeshProUGUI pausedText;
 
+    public bool gameIsOnPause = false;
     void Awake()
     {
         actualGrid = new Grid(gridHorizontal, gridVertical,gridMinX, gridMinY, gridHorizontalStep, gridVerticalStep, tilePrefab, gridHolder);
         playerHQ = GetComponent<HeadQuarter>();
+        gameIsOnPause = false;
     }
 
     void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.Space)){
+            gameIsOnPause = !gameIsOnPause;
+            if(gameIsOnPause){
+                pausedText.text = "Game Paused";
+            }else{
+                pausedText.text = "";
+            }
+        }
     }
 }
