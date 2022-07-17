@@ -2669,7 +2669,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -4.401993, y: 6.0470715, z: -5.0191426, w: 7.071515}
+  m_margin: {x: -58.52787, y: 6.0470715, z: -60.669662, w: 7.071515}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -7055,6 +7055,7 @@ MonoBehaviour:
   rarenessConfig: {fileID: 1356460319}
   pausedText: {fileID: 446391424}
   gameIsOnPause: 0
+  gameIsOver: 0
 --- !u!114 &1356460316
 MonoBehaviour:
   m_ObjectHideFlags: 0

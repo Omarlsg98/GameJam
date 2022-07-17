@@ -49,9 +49,9 @@ public class HeadQuarter : MonoBehaviour
         if(!mainController.gameIsOnPause){
             if (isPlayer){
                 if (hasWon()){
-                    Debug.Log("WOOOOON");
+                    mainController.setGameOver(true);
                 } else if (hasLost()){
-                    Debug.Log("LOOOOOST");
+                   mainController.setGameOver(false);
                 }
                 generateRandomNewSoul();
             }

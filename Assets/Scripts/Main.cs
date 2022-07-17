@@ -6,6 +6,7 @@ using static Grid;
 using static Demon;
 using static Player;
 using static HeadQuarter;
+using UnityEngine.SceneManagement; 
 
 using TMPro;
 
@@ -36,22 +37,41 @@ public class Main : MonoBehaviour
     public TextMeshProUGUI pausedText;
 
     public bool gameIsOnPause = false;
+    public bool gameIsOver = false;
     void Awake()
     {
         actualGrid = new Grid(gridHorizontal, gridVertical,gridMinX, gridMinY, gridHorizontalStep, gridVerticalStep, tilePrefab, gridHolder);
         playerHQ = GetComponent<HeadQuarter>();
         gameIsOnPause = false;
+        gameIsOver = false;
     }
 
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space)){
             gameIsOnPause = !gameIsOnPause;
+            if (gameIsOver){
+                //change scene
+                Scene scene = SceneManager.GetActiveScene(); 
+                SceneManager.LoadScene(scene.name);
+                return;
+            }
             if(gameIsOnPause){
                 pausedText.text = "Game Paused";
             }else{
                 pausedText.text = "";
             }
         }
+    }
+
+    public void setGameOver(bool playerWon){
+        gameIsOnPause = true;
+        gameIsOver = true;
+        if (playerWon){
+            pausedText.text = "Congratulations!\nYou succesfully cast the demon killer ray.";
+        }else{
+            pausedText.text = "Game Over!\nYou run out of souls.";
+        }
+        pausedText.text += "\n\nPress Space to restart.";
     }
 }
