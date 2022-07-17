@@ -68,7 +68,7 @@ public class Demon : MonoBehaviour
         this.grid = grid;
         grid.getTile(actPosition).updateStatus(false, isPlayer);
 
-        this.vanishCoolDown = new CoolDown(60.0f);
+        this.vanishCoolDown = new CoolDown(30.0f);
         this.vanishCoolDown.turnOnCooldown();
         this.spawCoolDown = new CoolDown(0.15f);
         
@@ -89,6 +89,7 @@ public class Demon : MonoBehaviour
             this.spawnColumnIndex = main.gridHorizontal - 1;
             this.spawnIndex = 7;
             this.adversaryDemons = main.playerDemons;
+            flipDemon(-1);
         }
 
         this.maxLife = this.totalStats.life;

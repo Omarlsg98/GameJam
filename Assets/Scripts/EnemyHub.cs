@@ -12,17 +12,21 @@ using static Head;
 public class EnemyHub : MonoBehaviour
 {
     public List<GameObject> enemiesPrefabs;
-    public int demonSpawnProbability = 40;
-    
+    public int demonSpawnVariability = 5;
+    public int demonWaveIncrease = 2;
+    public int waveToIncrementRails = 10;
+    public CoolDown spawnBetweenMonsterCooldown;
+    public CoolDown waveCoolDown;
+
     private Grid grid;
     private Main main;
-
-    public float timeForEachWave = 10.0f;
-    private CoolDown waveCoolDown;
-    private System.Random ranProbSpawn;
-
     private List<Demon> enemies;
     private int monsterSpawnPoint;
+
+    private int waveNum;
+    private int demonsToSpawn;
+    private List<int> availableLines;
+    
 
     void Start(){
         main = GetComponent<Main>();
@@ -31,42 +35,60 @@ public class EnemyHub : MonoBehaviour
 
         enemies = new List<Demon>();
         main.enemyDemons = enemies;
-        waveCoolDown = new CoolDown(timeForEachWave);
-        waveCoolDown.turnOnCooldown();
-        ranProbSpawn = new System.Random();
-        spawnDemon();
+        waveNum = 0;
+        demonsToSpawn = 0;
     }
 
     void Update(){
-        spawnWave(Time.unscaledTime);
+        spawnWave();
+
+        spawnBetweenMonsterCooldown.updateCoolDown();
+        if (demonsToSpawn >= 0 && spawnBetweenMonsterCooldown.isReady()){
+            spawnDemon();
+            spawnBetweenMonsterCooldown.turnOnCooldown();
+            waveCoolDown.turnOnCooldown();
+        }
     }
 
-    public void spawnWave(float currTime){
+    public void spawnWave(){
         waveCoolDown.updateCoolDown();
         if(waveCoolDown.isReady()){
-            int waveNum = (int)System.Math.Round(currTime/timeForEachWave);
-            int totalDemonsTrySpawn = waveNum*waveNum;
-            for (int i = 0; i < totalDemonsTrySpawn; i++) {
-                if(ranProbSpawn.Next(1,101) <= demonSpawnProbability){
-                    spawnDemon();
-                }
+            int lowRange = 1 + waveNum * demonWaveIncrease;
+            int upperRange = 1 + demonSpawnVariability + waveNum * demonWaveIncrease;
+            this.demonsToSpawn = Random.Range(lowRange, upperRange);
+
+            int numberOfRails = (int)(waveNum/waveToIncrementRails) + Random.Range(0,2);
+            if (numberOfRails > grid.getVerticalSize()){
+                numberOfRails = grid.getVerticalSize();
+            }else if (numberOfRails == 0){
+                numberOfRails = 1;
             }
+            availableLines = new List<int>();
+            for (int i = 0; i < numberOfRails; i++){
+                availableLines.Add(Random.Range(0, grid.getVerticalSize()));
+            }
+            
+            this.waveNum += 1;
             waveCoolDown.turnOnCooldown();
         }
     }
     public void spawnDemon(){
-        int lineNumber = Random.Range(0, grid.getVerticalSize());
-        DiscreteCoordinate newPosition = new DiscreteCoordinate(lineNumber, monsterSpawnPoint);
+        DiscreteCoordinate newPosition = new DiscreteCoordinate(getLineNumber(), monsterSpawnPoint);
 
-        foreach(Demon adversary in  main.playerDemons){
+        foreach(Demon adversary in main.playerDemons){
             if (adversary.isInPosition(newPosition)){
                 adversary.applyPushBack();
             }
         }
-
-        Demon newDemon = Demon.instantiateDemon(enemiesPrefabs[0], grid, null, null, 
+        int randomIndex = Random.Range(0, enemiesPrefabs.Count);
+        Demon newDemon = Demon.instantiateDemon(enemiesPrefabs[randomIndex], grid, null, null, 
                                                 newPosition, 
                                                 false, main, 200);
         enemies.Add(newDemon);
+        this.demonsToSpawn -= 1;
+    }
+
+    private int getLineNumber(){
+        return availableLines[Random.Range(0, availableLines.Count)];
     }
 }
