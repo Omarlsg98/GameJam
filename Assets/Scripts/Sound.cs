@@ -42,6 +42,8 @@ public class DemonSoundController : SoundController
     public MyAudioClip damageAudio;
     public MyAudioClip movementAudio;
     public MyAudioClip attackAudio;
+    public MyAudioClip scavengeAudio;
+    public MyAudioClip deathAudio;
 
    
     public void reproduceAttack(){
@@ -62,6 +64,14 @@ public class DemonSoundController : SoundController
 
     public void reproduceDamage(){
         reproduceSound(damageAudio);
+    }
+
+    public void repoduceScavenge(){
+        reproduceSound(scavengeAudio);
+    }
+
+    public void reproduceDeath(){
+        reproduceSound(deathAudio);
     }
 }
 

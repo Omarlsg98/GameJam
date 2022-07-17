@@ -12,6 +12,7 @@ using static Head;
 public class EnemyHub : MonoBehaviour
 {
     public List<GameObject> enemiesPrefabs;
+    public List<float> enemiesProbabilities;
     public int demonSpawnVariability = 5;
     public int demonWaveIncrease = 2;
     public int waveToIncrementRails = 10;
@@ -26,6 +27,7 @@ public class EnemyHub : MonoBehaviour
     private int waveNum;
     private int demonsToSpawn;
     private List<int> availableLines;
+    private float totalProbability;
     
 
     void Start(){
@@ -37,6 +39,9 @@ public class EnemyHub : MonoBehaviour
         main.enemyDemons = enemies;
         waveNum = 0;
         demonsToSpawn = 0;
+        foreach(float prob in enemiesProbabilities){
+            totalProbability += prob;
+        }
     }
 
     void Update(){
@@ -80,7 +85,7 @@ public class EnemyHub : MonoBehaviour
                 adversary.applyPushBack();
             }
         }
-        int randomIndex = Random.Range(0, enemiesPrefabs.Count);
+        int randomIndex = chooseRandomEnemyType();
         Demon newDemon = Demon.instantiateDemon(enemiesPrefabs[randomIndex], grid, null, null, 
                                                 newPosition, 
                                                 false, main, 200);
@@ -90,5 +95,19 @@ public class EnemyHub : MonoBehaviour
 
     private int getLineNumber(){
         return availableLines[Random.Range(0, availableLines.Count)];
+    }
+
+    private int chooseRandomEnemyType(){
+        int index = -1;
+        float rand = Random.Range(0.0f, totalProbability);
+        float probAcumulada = 0;
+        foreach(float prob in enemiesProbabilities){
+            probAcumulada += prob;
+            index +=1;
+            if(rand < probAcumulada){
+                return index;
+            }
+        }
+        return index;
     }
 }
