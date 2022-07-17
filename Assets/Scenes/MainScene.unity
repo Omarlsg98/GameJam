@@ -6723,6 +6723,10 @@ MonoBehaviour:
   - {fileID: 8767433061664985549, guid: 2778a6384a2fd11459862aa43edd1d32, type: 3}
   - {fileID: 8767433061664985549, guid: 724e750d4f9f13346bbd9edd9d3e6ebc, type: 3}
   - {fileID: 8767433061664985549, guid: 948761157876bda42843c8ba720536ee, type: 3}
+  enemiesProbabilities:
+  - 0.6
+  - 0.2
+  - 0.2
   demonSpawnVariability: 3
   demonWaveIncrease: 1
   waveToIncrementRails: 15
