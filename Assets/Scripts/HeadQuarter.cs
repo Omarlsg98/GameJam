@@ -6,6 +6,7 @@ using static Main;
 
 using static CoolDown;
 using static SoulInventory;
+using static Player;
 
 public class HeadQuarter : MonoBehaviour
 {
@@ -20,8 +21,11 @@ public class HeadQuarter : MonoBehaviour
     public bool isPlayer;
     public GameObject soulLevelBar;
     public GameObject nextSoulBar;
+
+    private Player playerController; 
     
     void Start(){
+        playerController = GetComponent<Player>();
         modifySoulBar();
         greenSoul.setSoulData();
         redSoul.setSoulData();
@@ -47,6 +51,19 @@ public class HeadQuarter : MonoBehaviour
      public bool hasLost(){
         return soulsLevel <= 0;
     }
+
+    public void putSoulTable(SoulType soulType){
+        if (addSoulsToStock(soulType, -1)){
+            playerController.addSoulToTable(soulType);
+        }
+    }
+
+    public void removeSoulTable(SoulType soulType){
+        if (playerController.removeSoulFromTable(soulType)){
+            addSoulsToStock(soulType, 1);
+        }
+    }
+
 
     public void generateRandomNewSoul(){
         newSoulCoolDown.updateCoolDown();
@@ -89,24 +106,34 @@ public class HeadQuarter : MonoBehaviour
         modifySoulBar();
     }
 
-    public void addSoulsToStock(SoulType soulType, int souls){
+    public bool addSoulsToStock(SoulType soulType, int souls){
         switch (soulType)
         {
             case SoulType.blue:
-            blueSoul.inventory += souls;
+                if (souls + blueSoul.inventory >= 0){
+                    blueSoul.inventory += souls;
+                    return true;
+                }
             break;
 
             case SoulType.green:
-            greenSoul.inventory += souls;
+                if (souls + greenSoul.inventory >= 0){
+                    greenSoul.inventory += souls;
+                    return true;
+                }
             break;
 
             case SoulType.red:
-            redSoul.inventory += souls;
+                if (souls + redSoul.inventory >= 0){
+                    redSoul.inventory += souls;
+                    return true;
+                }
             break;
 
             default:
-            return;
+            break;
         }
+        return false;
     }
 
     public void applyHit(int damage){

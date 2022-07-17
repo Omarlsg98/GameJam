@@ -32,21 +32,24 @@ public class Soul: MonoBehaviour{
     private HeadQuarter playerHeadQuarter;
 
     void Start(){
-        playerHeadQuarter = GameObject.FindWithTag("GameController").GetComponent<HeadQuarter>();
+        GameObject gameController = GameObject.FindWithTag("GameController");
+        playerHeadQuarter = gameController.GetComponent<HeadQuarter>();
     }
 
     void OnMouseOver(){
         if (buttonOnTable){
-            if(Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)){
-               //Remove souls 
-               Debug.Log("OnTable 0 o 1");
+            if(Input.GetMouseButtonDown(0)){
+                playerHeadQuarter.putSoulTable(soulData.soulType);
+            }
+            if(Input.GetMouseButtonDown(1)){
+                playerHeadQuarter.removeSoulTable(soulData.soulType);
             }
         } else {
             if(Input.GetMouseButtonDown(0)){
-                //Add souls
+                playerHeadQuarter.increaseSoulLevel(soulData.soulType);
             } 
             if(Input.GetMouseButtonDown(1)){
-                playerHeadQuarter.increaseSoulLevel(soulData.soulType);
+                
             }
         }
     }

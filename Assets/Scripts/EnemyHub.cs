@@ -48,7 +48,7 @@ public class EnemyHub : MonoBehaviour
 
         Demon newDemon = Demon.instantiateDemon(enemiesPrefabs[0], grid, null, null, 
                                                 newPosition, 
-                                                false, main);
+                                                false, main, 200);
         enemies.Add(newDemon);
     }
 }
