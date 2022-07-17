@@ -12,10 +12,14 @@ using static Head;
 public class EnemyHub : MonoBehaviour
 {
     public List<GameObject> enemiesPrefabs;
-    public float demonSpawnProbability = 0.005f;
+    public int demonSpawnProbability = 40;
     
     private Grid grid;
     private Main main;
+
+    private float timeForEachWave = 10.0f;
+    private CoolDown waveCoolDown;
+    private System.Random ranProbSpawn;
 
     private List<Demon> enemies;
     private int monsterSpawnPoint;
@@ -27,15 +31,29 @@ public class EnemyHub : MonoBehaviour
 
         enemies = new List<Demon>();
         main.enemyDemons = enemies;
+        waveCoolDown = new CoolDown(timeForEachWave);
+        waveCoolDown.turnOnCooldown();
+        ranProbSpawn = new System.Random();
         spawnDemon();
     }
 
     void Update(){
-        if(MyRandom.randomBool(demonSpawnProbability)){
-            spawnDemon();
-        }
+        spawnWave(Time.unscaledTime);
     }
 
+    public void spawnWave(float currTime){
+        waveCoolDown.updateCoolDown();
+        if(waveCoolDown.isReady()){
+            int waveNum = (int)System.Math.Round(currTime/timeForEachWave);
+            int totalDemonsTrySpawn = waveNum*waveNum;
+            for (int i = 0; i < totalDemonsTrySpawn; i++) {
+                if(ranProbSpawn.Next(1,101) <= demonSpawnProbability){
+                    spawnDemon();
+                }
+            }
+            waveCoolDown.turnOnCooldown();
+        }
+    }
     public void spawnDemon(){
         int lineNumber = Random.Range(0, grid.getVerticalSize());
         DiscreteCoordinate newPosition = new DiscreteCoordinate(lineNumber, monsterSpawnPoint);
