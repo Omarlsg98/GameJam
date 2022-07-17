@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
 
     public int[] soulInventory = new int[]{0, 0, 0};
     public SoulsDisplayer soulsDisplayer;
+    public SoulsExtractedDisplayer soulExtractedDisplayer;
 
     void Start(){
         main = GetComponent<Main>();
@@ -175,22 +176,32 @@ public class Player : MonoBehaviour
 
     private int consumeTableSouls(){
         int totalEnergyObtained = 0;
+        List<int> values = new List<int>();
         for (int i = 0; i < soulInventory.Length; i++){
             switch ((SoulType) i)
             {
-                case SoulType.blue:
-                for (int j = 0; j < soulInventory[i]; j++)
-                    totalEnergyObtained += playerHq.blueSoul.getSoulData().consumeSoul();
+                case SoulType.green:
+                for (int j = 0; j < soulInventory[i]; j++){
+                    int result = playerHq.greenSoul.getSoulData().consumeSoul();
+                    totalEnergyObtained += result;
+                    values.Add(result);
+                }
                 break;
 
-                case SoulType.green:
-                for (int j = 0; j < soulInventory[i]; j++)
-                    totalEnergyObtained += playerHq.greenSoul.getSoulData().consumeSoul();
+                case SoulType.blue:
+                for (int j = 0; j < soulInventory[i]; j++){
+                    int result = playerHq.blueSoul.getSoulData().consumeSoul();
+                    totalEnergyObtained += result;
+                    values.Add(result);
+                }
                 break;
 
                 case SoulType.red:
-                for (int j = 0; j < soulInventory[i]; j++)
-                    totalEnergyObtained += playerHq.redSoul.getSoulData().consumeSoul();
+                for (int j = 0; j < soulInventory[i]; j++){
+                    int result = playerHq.redSoul.getSoulData().consumeSoul();
+                    totalEnergyObtained += result;
+                    values.Add(result);
+                }
                 break;
 
                 default:
@@ -198,6 +209,8 @@ public class Player : MonoBehaviour
             }
             soulInventory[i] = 0;
         }
+        soulsDisplayer.updateSoulsCounter(soulInventory[0], soulInventory[1], soulInventory[2]);
+        soulExtractedDisplayer.setSoulsObtained(values.ToArray());
         return totalEnergyObtained;
     }
 

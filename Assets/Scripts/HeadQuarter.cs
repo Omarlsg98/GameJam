@@ -8,6 +8,8 @@ using static CoolDown;
 using static SoulInventory;
 using static Player;
 
+using TMPro;
+
 public class HeadQuarter : MonoBehaviour
 {
     public float soulsLevel;
@@ -20,10 +22,12 @@ public class HeadQuarter : MonoBehaviour
     private float sumSoulProbabilities;
     public bool isPlayer;
     public GameObject soulLevelBar;
+    public TextMeshProUGUI soulLevelText;
     public GameObject nextSoulBar;
 
     private Player playerController; 
     public SoulsDisplayer soulsDisplayer;
+    public SoulsExtractedDisplayer soulExtractedDisplayer;
     
     void Start(){
         playerController = GetComponent<Player>();
@@ -105,6 +109,7 @@ public class HeadQuarter : MonoBehaviour
             default:
             return;
         }
+        soulExtractedDisplayer.setSoulsObtained(new int[1]{souls});
         soulsDisplayer.updateSoulsCounter(greenSoul.inventory, blueSoul.inventory, redSoul.inventory);
         this.soulsLevel += souls;
         modifySoulBar();
@@ -152,6 +157,7 @@ public class HeadQuarter : MonoBehaviour
     }
 
     private void modifySoulBar(){
+        soulLevelText.text = this.soulsLevel+"/"+this.objectiveSoulLevel;
         this.soulLevelBar.transform.localScale = new Vector3(this.soulsLevel/this.objectiveSoulLevel, 1, 1);
     }
 
