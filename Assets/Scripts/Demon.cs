@@ -210,7 +210,7 @@ public class Demon : MonoBehaviour
             if ((verticalAxis == 1 | verticalAxis == -1) && this.actPosition.x == this.spawnColumnIndex){
                 newPosition =  new DiscreteCoordinate(actPosition.y + verticalAxis, actPosition.x);
             }
-            else if (horizontalAxis == 1 | horizontalAxis == -1){
+            else if (horizontalAxis <= 1 | horizontalAxis >= -1){
                 newPosition =  new DiscreteCoordinate(actPosition.y, actPosition.x + horizontalAxis);
             }
             if (grid.verifyPosition(newPosition) && newPosition != null){

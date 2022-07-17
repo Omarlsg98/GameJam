@@ -17,7 +17,7 @@ public class EnemyHub : MonoBehaviour
     private Grid grid;
     private Main main;
 
-    private float timeForEachWave = 10.0f;
+    public float timeForEachWave = 10.0f;
     private CoolDown waveCoolDown;
     private System.Random ranProbSpawn;
 
@@ -51,6 +51,7 @@ public class EnemyHub : MonoBehaviour
                     spawnDemon();
                 }
             }
+            Debug.Log(waveNum);
             waveCoolDown.turnOnCooldown();
         }
     }
