@@ -66,7 +66,7 @@ MonoBehaviour:
       audio: {fileID: 0}
       secondsToWait: 0
   head:
-    type: 0
+    type: 1
     prefab: {fileID: 0}
   totalStats:
     damage: 10
