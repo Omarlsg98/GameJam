@@ -1801,7 +1801,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &295906972
 GameObject:
@@ -2219,6 +2219,8 @@ MonoBehaviour:
     highRange: 50
     spawnProbability: 0.8
     soulType: 0
+    dicePrefab: {fileID: 0}
+    diceParent: {fileID: 0}
   buttonOnTable: 1
 --- !u!1 &368770350
 GameObject:
@@ -2896,7 +2898,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &458016615
 PrefabInstance:
@@ -3865,6 +3867,8 @@ MonoBehaviour:
     highRange: 200
     spawnProbability: 0.8
     soulType: 0
+    dicePrefab: {fileID: 8400443031127470690, guid: f24789c7c90182f46b25bf50befee96b, type: 3}
+    diceParent: {fileID: 953105770}
   buttonOnTable: 0
 --- !u!1 &598275597
 GameObject:
@@ -5955,7 +5959,7 @@ Transform:
   - {fileID: 1076790124}
   - {fileID: 1178768087}
   m_Father: {fileID: 953105773}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &953105770
 GameObject:
@@ -6039,6 +6043,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1622738302}
   - {fileID: 912219005}
   - {fileID: 1846726187}
   - {fileID: 5155395414445479994}
@@ -6299,6 +6304,8 @@ MonoBehaviour:
     highRange: 500
     spawnProbability: 0.4
     soulType: 1
+    dicePrefab: {fileID: 8400443031127470690, guid: f24789c7c90182f46b25bf50befee96b, type: 3}
+    diceParent: {fileID: 953105770}
   buttonOnTable: 0
 --- !u!1 &1082663279
 GameObject:
@@ -6367,6 +6374,8 @@ MonoBehaviour:
     highRange: 350
     spawnProbability: 0.1
     soulType: 2
+    dicePrefab: {fileID: 0}
+    diceParent: {fileID: 0}
   buttonOnTable: 1
 --- !u!1 &1116689849
 GameObject:
@@ -6769,6 +6778,8 @@ MonoBehaviour:
     highRange: 650
     spawnProbability: 0.1
     soulType: 2
+    dicePrefab: {fileID: 8400443031127470690, guid: f24789c7c90182f46b25bf50befee96b, type: 3}
+    diceParent: {fileID: 953105770}
   buttonOnTable: 0
 --- !u!58 &1178768090
 CircleCollider2D:
@@ -8655,13 +8666,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622738301}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -68.1, y: -14.6, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 22.5, y: 11.6, z: 0.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 953105773}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1625264122
 GameObject:
@@ -9899,7 +9910,7 @@ Transform:
   - {fileID: 155711549}
   - {fileID: 1454587657}
   m_Father: {fileID: 953105773}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1861769907
 PrefabInstance:
@@ -10058,6 +10069,8 @@ MonoBehaviour:
     highRange: 170
     spawnProbability: 0.4
     soulType: 1
+    dicePrefab: {fileID: 0}
+    diceParent: {fileID: 0}
   buttonOnTable: 1
 --- !u!1 &1886806863
 GameObject:
@@ -10489,7 +10502,7 @@ RectTransform:
   - {fileID: 1412159102}
   - {fileID: 1176156453}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -10651,7 +10664,7 @@ Transform:
   - {fileID: 1602015314}
   - {fileID: 794086424}
   m_Father: {fileID: 953105773}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2059724364
 GameObject:
@@ -13563,7 +13576,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 953105773}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5174801509311266076
 SpriteRenderer:
