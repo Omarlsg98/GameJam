@@ -4,25 +4,13 @@ using UnityEngine;
 
 using static PartData;
 using TMPro;
+
 public class StatsDisplayer : MonoBehaviour
 {
     public GameObject[] valTexts = new GameObject[11];
-    private PartData displayingData;
-    public bool isHorror;
+
     private string[] units = new string[]{"", " sl/act", " p/hit", " hit/s", " tl", " p", " kg", " %", " tl/s", " kg", ""}; 
     // Start is called before the first frame update
-
-    
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void changeDataDisplayed(PartData data, bool isHorror){
         string title = isHorror? "Horror" : data.type.ToString();

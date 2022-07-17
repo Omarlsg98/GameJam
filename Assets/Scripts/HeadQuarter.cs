@@ -23,6 +23,7 @@ public class HeadQuarter : MonoBehaviour
     public GameObject nextSoulBar;
 
     private Player playerController; 
+    public SoulsDisplayer soulsDisplayer;
     
     void Start(){
         playerController = GetComponent<Player>();
@@ -31,6 +32,8 @@ public class HeadQuarter : MonoBehaviour
         redSoul.setSoulData();
         blueSoul.setSoulData();
         this.sumSoulProbabilities = greenSoul.getSoulData().spawnProbability + redSoul.getSoulData().spawnProbability + blueSoul.getSoulData().spawnProbability;
+        soulsDisplayer.setSoulsValues(greenSoul.getSoulData(), blueSoul.getSoulData(), redSoul.getSoulData());
+        soulsDisplayer.updateSoulsCounter(greenSoul.inventory, blueSoul.inventory, redSoul.inventory);
     }
 
     void Update(){
@@ -102,38 +105,44 @@ public class HeadQuarter : MonoBehaviour
             default:
             return;
         }
+        soulsDisplayer.updateSoulsCounter(greenSoul.inventory, blueSoul.inventory, redSoul.inventory);
         this.soulsLevel += souls;
         modifySoulBar();
     }
 
     public bool addSoulsToStock(SoulType soulType, int souls){
+        bool valueUpdated = false;
         switch (soulType)
         {
             case SoulType.blue:
                 if (souls + blueSoul.inventory >= 0){
                     blueSoul.inventory += souls;
-                    return true;
+                    valueUpdated = true;
                 }
             break;
 
             case SoulType.green:
                 if (souls + greenSoul.inventory >= 0){
                     greenSoul.inventory += souls;
-                    return true;
+                    valueUpdated = true;
                 }
             break;
 
             case SoulType.red:
                 if (souls + redSoul.inventory >= 0){
                     redSoul.inventory += souls;
-                    return true;
+                    valueUpdated = true;
                 }
             break;
 
             default:
             break;
         }
-        return false;
+        if (valueUpdated){
+            soulsDisplayer.updateSoulsCounter(greenSoul.inventory, blueSoul.inventory, redSoul.inventory);
+            return true;
+        }
+        return valueUpdated;
     }
 
     public void applyHit(int damage){

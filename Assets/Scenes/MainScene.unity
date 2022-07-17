@@ -1264,7 +1264,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 9.393528, y: 5.0178747, z: 48.384186, w: 7.02195}
+  m_margin: {x: 1.0445976, y: 5.0178747, z: 40.677483, w: 7.02195}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3487,7 +3487,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 588880189}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.95, y: 5.71, z: 0}
+  m_LocalPosition: {x: 1.95, y: 5.71, z: 1.64}
   m_LocalScale: {x: 0.5847955, y: 0.59523803, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5606,6 +5606,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 993153552}
+  - component: {fileID: 993153553}
   m_Layer: 5
   m_Name: GeneralSouls
   m_TagString: Untagged
@@ -5637,6 +5638,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &993153553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993153551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1681a4d6876e35f45b6bf7bbe934f4b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texts:
+  - {fileID: 476095419}
+  - {fileID: 827616279}
+  - {fileID: 1828651330}
+  - {fileID: 41547895}
+  - {fileID: 532491575}
+  - {fileID: 228314183}
 --- !u!1 &1076790123
 GameObject:
   m_ObjectHideFlags: 0
@@ -5664,7 +5684,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1076790123}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.11, y: 4.51, z: 0}
+  m_LocalPosition: {x: 1.11, y: 4.51, z: 1.55}
   m_LocalScale: {x: 0.5847955, y: 0.59523803, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6044,6 +6064,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1166539484}
+  - component: {fileID: 1166539485}
   m_Layer: 5
   m_Name: TableSouls
   m_TagString: Untagged
@@ -6074,6 +6095,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1166539485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166539483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1681a4d6876e35f45b6bf7bbe934f4b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 2143241224}
+  - {fileID: 1922822214}
+  - {fileID: 2059724364}
 --- !u!1 &1176156452
 GameObject:
   m_ObjectHideFlags: 0
@@ -6139,7 +6179,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1178768086}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 3.43, z: 0}
+  m_LocalPosition: {x: 2, y: 3.43, z: 1.55}
   m_LocalScale: {x: 0.5847955, y: 0.59523803, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6648,6 +6688,7 @@ MonoBehaviour:
   rowSelectorCoolDown:
     timeToWait: 0.3
   soulInventory: 000000000000000000000000
+  soulsDisplayer: {fileID: 1166539485}
 --- !u!114 &1356460317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6662,7 +6703,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesPrefabs:
   - {fileID: 8767433061664985549, guid: 2778a6384a2fd11459862aa43edd1d32, type: 3}
-  demonSpawnProbability: 20
+  demonSpawnProbability: 10
   timeForEachWave: 7
 --- !u!114 &1356460318
 MonoBehaviour:
@@ -6692,6 +6733,7 @@ MonoBehaviour:
   isPlayer: 1
   soulLevelBar: {fileID: 1402442713}
   nextSoulBar: {fileID: 893456576}
+  soulsDisplayer: {fileID: 993153553}
 --- !u!1 &1383755354
 GameObject:
   m_ObjectHideFlags: 0
@@ -9956,7 +9998,6 @@ MonoBehaviour:
   - {fileID: 598275597}
   - {fileID: 1566282639}
   - {fileID: 1617630899}
-  isHorror: 0
 --- !u!1001 &2107654284
 PrefabInstance:
   m_ObjectHideFlags: 0

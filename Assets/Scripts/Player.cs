@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     private List<Demon> demons;
 
     public int[] soulInventory = new int[]{0, 0, 0};
+    public SoulsDisplayer soulsDisplayer;
 
     void Start(){
         main = GetComponent<Main>();
@@ -47,6 +48,7 @@ public class Player : MonoBehaviour
         moveSelectedRow(0);
         parts = new GameObject[5];
         displayCurrentStats();
+        soulsDisplayer.updateSoulsCounter(0, 0, 0);
     }
 
     void Update(){
@@ -130,11 +132,13 @@ public class Player : MonoBehaviour
 
     public void addSoulToTable(SoulType soulType){
         soulInventory[(int)soulType] += 1;
+        soulsDisplayer.updateSoulsCounter(soulInventory[0], soulInventory[1], soulInventory[2]);
     }
 
     public bool removeSoulFromTable(SoulType soulType){
         if (soulInventory[(int)soulType] > 0){
             soulInventory[(int)soulType] -= 1;
+            soulsDisplayer.updateSoulsCounter(soulInventory[0], soulInventory[1], soulInventory[2]);
             return true;
         }
         return false;
