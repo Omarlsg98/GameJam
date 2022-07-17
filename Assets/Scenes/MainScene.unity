@@ -6974,6 +6974,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6baf2f947349e0a4a879601ff16d4dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chestPrefab: {fileID: 4648646050569592093, guid: 58fc08317c2060548995e1e59e85e0b6, type: 3}
+  parts:
+  - {fileID: 4296614334837497715, guid: dd698ddbe913eab4da8817e5fbdd0472, type: 3}
+  - {fileID: 7623658504545660094, guid: 1924b171a8d4f9847852abc9abfaa326, type: 3}
+  - {fileID: 4648646050569592093, guid: 58fc08317c2060548995e1e59e85e0b6, type: 3}
+  - {fileID: 6790626915396034620, guid: b629623854443414aa0c3e2b27dcdfaa, type: 3}
+  - {fileID: 8722367550862433898, guid: 86d7ea2611318834889d6f2ab132a225, type: 3}
   soulsLevel: 100
   objectiveSoulLevel: 100000
   newSoulCoolDown:
@@ -7226,6 +7233,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6baf2f947349e0a4a879601ff16d4dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chestPrefab: {fileID: 0}
+  parts: []
   soulsLevel: 100
   objectiveSoulLevel: 100000
   newSoulCoolDown:

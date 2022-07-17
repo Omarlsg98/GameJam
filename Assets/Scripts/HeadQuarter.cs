@@ -12,6 +12,8 @@ using TMPro;
 
 public class HeadQuarter : MonoBehaviour
 {
+    public GameObject chestPrefab;
+    public List<GameObject> parts;
     public float soulsLevel;
     public float objectiveSoulLevel;
     public CoolDown newSoulCoolDown;
@@ -48,6 +50,36 @@ public class HeadQuarter : MonoBehaviour
                 Debug.Log("LOOOOOST");
             }
             generateRandomNewSoul();
+        }
+    }
+
+    public void spawnPart(SoulType soulType){
+        int souls;
+        switch (soulType)
+        {
+            case SoulType.blue:
+            souls = blueSoul.consumeSoulFromInventory();
+            break;
+
+            case SoulType.green:
+            souls = greenSoul.consumeSoulFromInventory();
+            break;
+
+            case SoulType.red:
+            souls = redSoul.consumeSoulFromInventory();
+            break;
+
+            default:
+            return;
+        }
+        if(souls != 0){
+            soulExtractedDisplayer.setSoulsObtained(new int[1]{souls});
+            soulsDisplayer.updateSoulsCounter(greenSoul.inventory, blueSoul.inventory, redSoul.inventory);
+            int moreParts = (int)(souls/100);
+            playerController.putPartInBox(Instantiate(chestPrefab, gameObject.transform));
+            for (int i = 0; i < moreParts; i++){
+                playerController.putPartInBox(Instantiate(parts[Random.Range(0, parts.Count)], gameObject.transform));
+            }
         }
     }
 

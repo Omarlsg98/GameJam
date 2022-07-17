@@ -49,7 +49,7 @@ public class Soul: MonoBehaviour{
                 playerHeadQuarter.increaseSoulLevel(soulData.soulType);
             } 
             if(Input.GetMouseButtonDown(1)){
-                
+                playerHeadQuarter.spawnPart(soulData.soulType);
             }
         }
     }
