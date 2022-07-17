@@ -92,7 +92,7 @@ public class EnemyHub : MonoBehaviour
         for (int i = 0; i < newDemon.transform.childCount; i++){
             Transform child = newDemon.transform.GetChild(i);
             if(child.transform.GetComponent<PartConfiguration>()!=null){
-                newDemon.transform.GetChild(i).transform.GetComponent<PartConfiguration>().partData.setRandomRareness();
+                
             }
         }
         enemies.Add(newDemon);

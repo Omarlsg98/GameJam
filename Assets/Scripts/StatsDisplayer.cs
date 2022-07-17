@@ -10,8 +10,7 @@ public class StatsDisplayer : MonoBehaviour
     public GameObject[] valTexts = new GameObject[11];
 
     private string[] units = new string[]{"", " sl/act", " p/hit", " hit/s", " tl", " p", " kg", " %", " tl/s", " kg", ""}; 
-    // Start is called before the first frame update
-
+    
     public void changeDataDisplayed(PartData data, bool isHorror){
         string title = isHorror? "Horror" : data.type.ToString();
         valTexts[0].GetComponent<TextMeshProUGUI>().text = title + " Stats:";
@@ -30,6 +29,7 @@ public class StatsDisplayer : MonoBehaviour
                  valTexts[i].GetComponent<TextMeshProUGUI>().text = "0" + units[i];
             }
         }
-        valTexts[10].GetComponent<TextMeshProUGUI>().text = "N/A";
+        valTexts[10].GetComponent<TextMeshProUGUI>().color = isHorror? valTexts[9].GetComponent<TextMeshProUGUI>().color : data.rareType.color;
+        valTexts[10].GetComponent<TextMeshProUGUI>().text = isHorror? "N/A" : data.rareType.type.ToString();
     }
 }

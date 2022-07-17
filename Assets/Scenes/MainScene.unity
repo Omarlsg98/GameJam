@@ -6862,6 +6862,7 @@ GameObject:
   - component: {fileID: 1356460316}
   - component: {fileID: 1356460317}
   - component: {fileID: 1356460318}
+  - component: {fileID: 1356460319}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -6912,6 +6913,7 @@ MonoBehaviour:
   playerController: {fileID: 0}
   playerHQ: {fileID: 0}
   enemyHQ: {fileID: 1421594320}
+  rarenessConfig: {fileID: 1356460319}
 --- !u!114 &1356460316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7000,6 +7002,39 @@ MonoBehaviour:
   nextSoulBar: {fileID: 893456576}
   soulsDisplayer: {fileID: 993153553}
   soulExtractedDisplayer: {fileID: 1335186796}
+--- !u!114 &1356460319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356460313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3ef5942e53d2a43981d53bc792e6df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rarenessTypes:
+  - type: 0
+    probability: 50
+    multiplier: 1
+    color: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+  - type: 1
+    probability: 75
+    multiplier: 1.2
+    color: {r: 0.10990305, g: 0.509434, b: 0.0019223545, a: 1}
+  - type: 2
+    probability: 90
+    multiplier: 1.6
+    color: {r: 0.011039185, g: 0.00884653, b: 0.6698113, a: 1}
+  - type: 3
+    probability: 98
+    multiplier: 2
+    color: {r: 0.9811321, g: 0.2906005, b: 0, a: 1}
+  - type: 4
+    probability: 100
+    multiplier: 3.5
+    color: {r: 0.754717, g: 0, b: 0.4822634, a: 1}
 --- !u!1 &1383755354
 GameObject:
   m_ObjectHideFlags: 0
@@ -8160,8 +8195,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13
-  m_fontSizeBase: 13
+  m_fontSize: 11
+  m_fontSizeBase: 11
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8196,7 +8231,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.63946915, y: 6.0470715, z: 140.94455, w: 23.460955}
+  m_margin: {x: -0.63946915, y: 6.0470715, z: 131.7288, w: 23.460955}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -10731,58 +10766,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &814905652599602092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7401244055235377482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050eaad365321d94397b3d92b3f23078, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  partData:
-    damage: 10
-    attackSpeed: 1
-    range: 1
-    life: 10
-    loadCapacity: 10
-    weight: 2.5
-    energyConsumption: 1
-    luck: 0.4
-    movementSpeed: 3
-    skills: 
-    type: 0
-  inBox: 0
-  onTable: 0
---- !u!114 &845884522073298631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9179967997459965121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050eaad365321d94397b3d92b3f23078, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  partData:
-    damage: 20
-    attackSpeed: 2
-    range: 1
-    life: 10
-    loadCapacity: 10
-    weight: 2.5
-    energyConsumption: 1
-    luck: 0.4
-    movementSpeed: 1
-    skills: 
-    type: 0
-  inBox: 0
-  onTable: 0
 --- !u!4 &896728013385572160
 Transform:
   m_ObjectHideFlags: 0
@@ -13021,7 +13004,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1832464433514747923}
   - component: {fileID: 2109201536213212876}
-  - component: {fileID: 4751462085568351713}
   m_Layer: 0
   m_Name: FrontalArm
   m_TagString: Untagged
@@ -13039,7 +13021,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3887568958319909398}
   - component: {fileID: 3887568958319909399}
-  - component: {fileID: 4534377046870464164}
   m_Layer: 0
   m_Name: ChestPlace
   m_TagString: Untagged
@@ -13114,32 +13095,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4212107260028530335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6308919804526242937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050eaad365321d94397b3d92b3f23078, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  partData:
-    damage: 10
-    attackSpeed: 1
-    range: 1
-    life: 10
-    loadCapacity: 10
-    weight: 2.5
-    energyConsumption: 1
-    luck: 0.4
-    movementSpeed: 3
-    skills: 
-    type: 0
-  inBox: 0
-  onTable: 0
 --- !u!212 &4498669340838223077
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13192,58 +13147,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4534377046870464164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3887568958319909393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050eaad365321d94397b3d92b3f23078, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  partData:
-    damage: 10
-    attackSpeed: 1
-    range: 1
-    life: 100
-    loadCapacity: 10
-    weight: 5
-    energyConsumption: 1
-    luck: 0.4
-    movementSpeed: 1
-    skills: 
-    type: 1
-  inBox: 0
-  onTable: 0
---- !u!114 &4751462085568351713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3830441962157768679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050eaad365321d94397b3d92b3f23078, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  partData:
-    damage: 20
-    attackSpeed: 2
-    range: 1
-    life: 10
-    loadCapacity: 10
-    weight: 2.5
-    energyConsumption: 1
-    luck: 0.4
-    movementSpeed: 1
-    skills: 
-    type: 0
-  inBox: 0
-  onTable: 0
 --- !u!4 &5046820569135464374
 Transform:
   m_ObjectHideFlags: 0
@@ -13423,7 +13326,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5046820569135464374}
   - component: {fileID: 24289041028431106}
-  - component: {fileID: 4212107260028530335}
   m_Layer: 0
   m_Name: FrontalLeg
   m_TagString: Untagged
@@ -13431,32 +13333,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6366684855840419493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7512802920226960465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050eaad365321d94397b3d92b3f23078, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  partData:
-    damage: 0
-    attackSpeed: 0
-    range: 0
-    life: 0
-    loadCapacity: 0
-    weight: 0
-    energyConsumption: 0
-    luck: 0
-    movementSpeed: 0
-    skills: 
-    type: 0
-  inBox: 0
-  onTable: 0
 --- !u!1 &6371672954672018473
 GameObject:
   m_ObjectHideFlags: 0
@@ -13743,7 +13619,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8589105501797886597}
   - component: {fileID: 3561506878651312177}
-  - component: {fileID: 814905652599602092}
   m_Layer: 0
   m_Name: BackLeg
   m_TagString: Untagged
@@ -13761,7 +13636,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8800042545992822130}
   - component: {fileID: 5174801509311266076}
-  - component: {fileID: 6366684855840419493}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -13899,7 +13773,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5990775259136574261}
   - component: {fileID: 6271501578999793130}
-  - component: {fileID: 845884522073298631}
   m_Layer: 0
   m_Name: BackArm
   m_TagString: Untagged

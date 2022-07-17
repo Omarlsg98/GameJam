@@ -19,14 +19,10 @@ public class PartData
     public float energyConsumption = 1.0f; //Energy consume per action
     public float luck = 0.4f;  //chance of scavenge a part
     public float movementSpeed = 2; //tiles per second
-    public static int commonProbability = 50; //probability of part being of common rarenes
-    public static int uncommonProbability = 75; //probability of part being of uncommon rarenes
-    public static int rareProbability = 90; //probability of part being of rare rarenes
-    public static int epicProbability = 98; //probability of part being of epic rarenes
-    public static int legendaryProbability = 100; //probability of part being of legendary rarenes
+
     public List<SpecialSkill> skills;
     public PartType type;
-    public Rareness rareType;
+    public RarenessData rareType;
 
     public PartData(PartData part){
         this.damage = part.damage;
@@ -41,6 +37,21 @@ public class PartData
         this.skills = new List<SpecialSkill>(part.skills);
         this.type = part.type;
         this.rareType = part.rareType;
+    }
+
+    public PartData(PartData part, RarenessData rareType){
+        this.damage = part.damage * rareType.multiplier;
+        this.attackSpeed = part.attackSpeed * rareType.multiplier;
+        this.range = (int)(part.range * rareType.multiplier);
+        this.life = part.life * rareType.multiplier;
+        this.loadCapacity = part.loadCapacity * rareType.multiplier;
+        this.weight = part.weight * rareType.multiplier/2;
+        this.energyConsumption = part.energyConsumption * rareType.multiplier/2;
+        this.luck = part.luck * rareType.multiplier;
+        this.movementSpeed = part.movementSpeed * rareType.multiplier;
+        this.skills = new List<SpecialSkill>(part.skills);
+        this.type = part.type;
+        this.rareType = rareType;
     }
 
     public static PartData getTotalStats(GameObject[] parts){
@@ -79,24 +90,6 @@ public class PartData
         }
         return result;
     }
-
-    public void setRandomRareness(){
-        if(this.rareType!=Rareness.Common){
-            System.Random rand = new System.Random();
-            int valRand = rand.Next(1, 101);
-            if (valRand <= commonProbability){
-                rareType = Rareness.Common;
-            }else if(valRand <= uncommonProbability){
-                rareType = Rareness.Uncommon;
-            }else if(valRand <= rareProbability){
-                rareType = Rareness.Rare;
-            }else if(valRand <= epicProbability){
-                rareType = Rareness.Epic;
-            }else{
-                rareType = Rareness.Legendary;
-            }
-        }
-    }
 }
 
 public class PartConfiguration : MonoBehaviour
@@ -106,9 +99,15 @@ public class PartConfiguration : MonoBehaviour
     public bool onTable = false;
 
     private Player player;
+    private Main main;
 
     void Start(){
-        player = GameObject.FindWithTag("GameController").GetComponent<Player>();
+        GameObject gameController = GameObject.FindWithTag("GameController");
+        player = gameController.GetComponent<Player>();
+        main = gameController.GetComponent<Main>();
+
+        RarenessData rareness = main.rarenessConfig.getRandomRareness();
+        applyRareness(rareness);
     }
 
     void OnMouseEnter()
@@ -142,6 +141,12 @@ public class PartConfiguration : MonoBehaviour
         this.inBox = false;
         this.onTable = false;
     }
+
+    private void applyRareness(RarenessData rareness){
+        PartData newPartData = new PartData(this.partData, rareness);
+        this.partData = newPartData;
+        gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = rareness.color;
+    }
 }
 
 public enum SpecialSkill{
@@ -153,12 +158,3 @@ public enum PartType{
     Limb,
     Chest
 }
-
-public enum Rareness{
-    Common,
-    Uncommon,
-    Rare,
-    Epic,
-    Legendary
-}
-

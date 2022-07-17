@@ -30,6 +30,8 @@ public class Main : MonoBehaviour
     public HeadQuarter playerHQ;
     public HeadQuarter enemyHQ;
 
+    public RarenessConfig rarenessConfig;
+
     void Awake()
     {
         actualGrid = new Grid(gridHorizontal, gridVertical,gridMinX, gridMinY, gridHorizontalStep, gridVerticalStep, tilePrefab, gridHolder);
