@@ -48,6 +48,8 @@ public class Demon : MonoBehaviour
     private float currentLoad;
 
     private float totalEnergy;
+
+    private bool hasBeenRecalled;
     
 
     private static string[] partNames = new string[]{"BackArm", "BackLeg", "Chest", "Head", "FrontLeg", "FrontArm"};
@@ -98,6 +100,8 @@ public class Demon : MonoBehaviour
 
         this.actPosition = actPosition;
         this.difficultyFactor = main.difficultyFactor;
+
+        this.hasBeenRecalled = false;
     }
 
 
@@ -111,9 +115,22 @@ public class Demon : MonoBehaviour
             return;
         attackCoolDown.updateCoolDown();
         if (isAlive()){
-            think();
+            if (!this.hasBeenRecalled){
+                think();
+            }else{
+                move(0, -1);
+                if (this.actPosition.x == this.spawnColumnIndex)
+                    recallDemon();
+            }
         }else{
             animateVanishProcess();
+        }
+    }
+
+    void OnMouseDown(){
+        if(isPlayer){
+            this.hasBeenRecalled = !this.hasBeenRecalled;
+            Debug.Log("Entra a click demon "+ hasBeenRecalled);
         }
     }
 
@@ -368,9 +385,9 @@ public class Demon : MonoBehaviour
         float vanishFactor = vanishCoolDown.getPercentageToWait();
         vanishFactor = vanishFactor < 0.2f ? 0.2f : vanishFactor;
         for (int i = 0; i < gameObject.transform.childCount; i++){
-            Transform child = gameObject.transform.GetChild(i).GetChild(0);
-            if (child == null)
+            if(gameObject.transform.GetChild(i).gameObject.tag == "NotLootable")
                 continue;
+            Transform child = gameObject.transform.GetChild(i).GetChild(0);                
             SpriteRenderer renderer = child.gameObject.GetComponent<SpriteRenderer>();
             SpriteEffects.changeSpriteAlpha(renderer, vanishFactor);
         } 

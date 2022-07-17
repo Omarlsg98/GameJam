@@ -171,8 +171,10 @@ public class HeadQuarter : MonoBehaviour
     }
 
     private void modifySoulBar(){
-        soulLevelText.text = this.soulsLevel+"/"+this.objectiveSoulLevel;
-        this.soulLevelBar.transform.localScale = new Vector3(this.soulsLevel/this.objectiveSoulLevel, 1, 1);
+        if(isPlayer){
+            soulLevelText.text = this.soulsLevel+"/"+this.objectiveSoulLevel;
+            this.soulLevelBar.transform.localScale = new Vector3(this.soulsLevel/this.objectiveSoulLevel, 1, 1);
+        }
     }
 
     private void modifyNextSoulBar(){
